@@ -155,6 +155,22 @@
 .product-panel--faraway .demo { --accent: var(--amber); }
 
 .faraway-page { --accent: var(--amber); --accent-dim: var(--amber-dim); --accent-glow: var(--amber-glow); }
+
+/* Cutter рисует волну тем же янтарём, что и Faraway, поэтому берёт тот же
+   токен, а не третий оттенок ради непохожести. Окно у него 3:2 — картинка
+   заметно ниже, чем у соседей, и растягивать её до их высоты нельзя. */
+.product-panel--cutter { --accent: var(--amber); }
+.cutter-page { --accent: var(--amber); --accent-dim: var(--amber-dim); --accent-glow: var(--amber-glow); }
+.cutter-shot img { width: 100%; max-width: 100%; transform: none; }
+.cutter-control-shot { aspect-ratio: 1.5 / 1; }
+.cutter-control-shot img { width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: center; }
+
+/* Экран «готово» в диалоге бесплатной выдачи: ссылки вместо кнопки оплаты.
+   Отдельный блок, а не подмена текста в форме, — чтобы поля с согласиями
+   ушли с экрана вместе с формой и не выглядели как что-то, что ещё можно
+   передумать после того, как согласие уже отправлено. */
+.checkout-links { display: grid; gap: 10px; margin: 18px 0; }
+.checkout-link { text-align: center; text-decoration: none; }
 .faraway-shot img { width: 100%; max-width: 100%; transform: none; }
 /* Герой Faraway жил на своей сетке — 0.72/1.28 против 1/1.05 у Ricochet, —
    и колонка текста выходила 392 px против 562. Две страницы одного продукта

@@ -3,7 +3,11 @@ document.documentElement.classList.add('js');
 const products = {
   ricochet: { title: 'Ricochet', price: 2499 },
   faraway: { title: 'Faraway', price: 2499 },
-  combo: { title: 'Faraway + Ricochet', price: 3999 }
+  combo: { title: 'Faraway + Ricochet', price: 3999 },
+  /* Бесплатный продукт идёт по другому эндпоинту и не уходит в банк: там не
+     платёж на ноль рублей, а согласия и ссылка. Флаг здесь — единственное, что
+     отличает две ветки ниже; всё остальное в диалоге общее. */
+  cutter: { title: 'Cutter', free: true }
 };
 
 document.querySelectorAll('.reveal').forEach((el) => {
@@ -35,7 +39,8 @@ if (dialog && form) {
       const product = products[button.dataset.checkout] ? button.dataset.checkout : productInput.value;
       productInput.value = product;
       const item = products[product];
-      document.getElementById('checkout-title').textContent = `${item.title} — ${item.price} ₽`;
+      document.getElementById('checkout-title').textContent =
+        item.free ? `${item.title} · бесплатно` : `${item.title} — ${item.price} ₽`;
       clearError();
       if (typeof dialog.showModal === 'function') {
         dialog.showModal();
@@ -50,8 +55,52 @@ if (dialog && form) {
     event.preventDefault(); clearError();
     const name = form.elements.name.value.trim();
     const email = form.elements.email.value.trim();
-    if (name.length < 2) { form.elements.name.setAttribute('aria-invalid', 'true'); form.elements.name.focus(); return showError('Укажите имя для лицензии.'); }
+    if (name.length < 2) { form.elements.name.setAttribute('aria-invalid', 'true'); form.elements.name.focus(); return showError(products[productInput.value] && products[productInput.value].free ? 'Укажите имя — так письмо не будет безличным.' : 'Укажите имя для лицензии.'); }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { form.elements.email.setAttribute('aria-invalid', 'true'); form.elements.email.focus(); return showError('Проверьте адрес почты.'); }
+    const free = products[productInput.value] && products[productInput.value].free;
+
+    if (free) {
+      const personal = form.elements.consent_personal;
+      const marketing = form.elements.consent_marketing;
+      /* Диалог без полей согласия — это чужая страница (главная, платный
+         продукт), куда кнопку бесплатного продукта поставили по ошибке.
+         Согласие нельзя получить молча, поэтому вместо запроса уводим человека
+         на страницу продукта, где форма настоящая. */
+      if (!personal || !marketing) { window.location.href = `/${productInput.value}/`; return; }
+      if (!personal.checked) { personal.focus(); return showError('Без согласия на обработку данных мы не можем даже сохранить адрес.'); }
+      if (!marketing.checked) { marketing.focus(); return showError('Отметьте согласие на письма — ссылку мы присылаем на почту.'); }
+      submit.disabled = true; submit.textContent = 'Готовим ссылки…';
+      try {
+        const response = await fetch(`${API_BASE}/api/free`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product: productInput.value, email, name,
+            consent_personal: true, consent_marketing: true
+          })
+        });
+        if (!response.ok) throw new Error(response.status === 503 ? 'Ссылки на скачивание ещё не готовы. Напишите нам на plugins@podlesnytwins.com.' : 'Не удалось получить ссылку. Попробуйте ещё раз.');
+        const data = await response.json();
+        const links = Array.isArray(data.downloads) ? data.downloads : [];
+        if (!links.length) throw new Error('Сервер не вернул ссылку. Напишите нам на plugins@podlesnytwins.com.');
+        const done = dialog.querySelector('.checkout-done');
+        const box = done.querySelector('.checkout-links');
+        box.textContent = '';
+        links.forEach((item) => {
+          const link = document.createElement('a');
+          link.className = 'btn btn-amber btn-large checkout-link';
+          link.href = item.url; link.rel = 'noopener';
+          link.textContent = `Скачать для ${item.label}`;
+          box.append(link);
+        });
+        form.hidden = true; done.hidden = false;
+        done.querySelector('.checkout-link').focus();
+      } catch (error) {
+        showError(error instanceof TypeError ? 'Не удалось связаться с сервером. Проверьте соединение.' : error.message);
+        submit.disabled = false; submit.textContent = submitLabel;
+      }
+      return;
+    }
+
     if (!form.elements.consent.checked) { form.elements.consent.focus(); return showError('Примите публичную оферту, чтобы продолжить.'); }
     submit.disabled = true; submit.textContent = 'Готовим оплату…';
     try {

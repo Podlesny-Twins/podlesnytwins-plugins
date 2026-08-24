@@ -28,15 +28,15 @@ async function dashboard(q=''){
   const res=await api('/api/admin/dashboard?q='+encodeURIComponent(q));
   if(res.status===401){auth.hidden=false;crm.hidden=true;return;}
   const data=await res.json();
-  document.getElementById('metrics').innerHTML=metric('Всего заказов',data.summary.orders)+metric('Оплачено, ₽',Number(data.summary.revenue).toFixed(2))+data.products.map(p=>metric(esc(p.product),`${p.orders} / ${Number(p.revenue).toFixed(2)} ₽`)).join('');
+  document.getElementById('metrics').innerHTML=metric('Всего заказов',data.summary.orders)+metric('Оплачено, ₽',Number(data.summary.revenue).toFixed(2))+metric('Бесплатных выдач',data.summary.free??0)+metric('Согласий на письма',data.summary.subscribers??0)+data.products.map(p=>metric(esc(p.title||p.product),`${p.orders} / ${Number(p.revenue).toFixed(2)} ₽`)).join('');
   document.getElementById('csv').href=API+'/api/admin/export.csv?q='+encodeURIComponent(q);
   const box=document.getElementById('orders');box.textContent='';
   if(!data.orders.length){box.innerHTML='<tr><td colspan="7">Заказов по этому запросу нет. Измените строку поиска.</td></tr>';return;}
   data.orders.forEach(o=>{
     const tr=document.createElement('tr');
     const devices=o.device_rows.map(deviceMarkup).join('');
-    tr.innerHTML=`<td>${esc(new Date(o.created_at).toLocaleDateString('ru-RU'))}<small>${esc(o.order)}</small></td><td>${esc(o.name)}<small>${esc(o.email)}</small></td><td>${esc(o.product)}</td><td class="status-${esc(o.status.toLowerCase())}">${esc(o.status)}<small>${o.delivered?'письмо отправлено':'не доставлено'}</small></td><td>${esc(o.amount)} ₽</td><td><span class="device-count">${o.devices}</span>${devices}</td><td><div class="row-actions"><button class="btn btn-secondary btn-small resend">Повторить письмо</button></div></td>`;
-    tr.querySelector('.resend').onclick=()=>action('/api/admin/order/resend',{order:o.order},'Письмо отправлено повторно.');
+    tr.innerHTML=`<td>${esc(new Date(o.created_at).toLocaleDateString('ru-RU'))}<small>${esc(o.order)}</small></td><td>${esc(o.name)}<small>${esc(o.email)}${o.marketing?' · письма':''}</small></td><td>${esc(o.title||o.product)}</td><td class="status-${esc(o.status.toLowerCase())}">${esc(o.status_label||o.status)}<small>${o.delivered?'письмо отправлено':'не доставлено'}</small></td><td>${esc(o.amount)} ₽</td><td><span class="device-count">${o.devices}</span>${devices}</td><td><div class="row-actions">${o.free?'':'<button class="btn btn-secondary btn-small resend">Повторить письмо</button>'}</div></td>`;
+    const resend=tr.querySelector('.resend');if(resend)resend.onclick=()=>action('/api/admin/order/resend',{order:o.order},'Письмо отправлено повторно.');
     tr.querySelectorAll('.release').forEach(btn=>btn.onclick=async()=>{
       if(!confirmRelease(o.order,btn))return;
       btn.disabled=true;btn.textContent='Отвязываем…';
