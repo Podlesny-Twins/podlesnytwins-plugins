@@ -12,14 +12,14 @@
 
 ### Controls
 - TRIGGER: THRESHOLD, FILTER, HOLD.
-- MOTION: START L/R, WIDTH, VARY, MIX.
+- MOTION: START (LEFT/RIGHT/CENTRE), WIDTH, POINTS, VARY, SETTLE. MIX убран в v1.7.0 — плагин всегда 100 % wet.
 
 ### Displays
 - MOVEMENT — position trace + side-chain meter.
 - LAST EVENT — last hit waveform with the move window shaded.
 
 ### Tech
-- VST3 / AU / Standalone.
+- VST3 и AU. Standalone собирается CMake, но в установщик не кладётся.
 - macOS.
 - 8 UI themes.
 - Version 1.0.1.

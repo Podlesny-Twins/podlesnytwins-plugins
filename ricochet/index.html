@@ -12,8 +12,8 @@
   <meta property="og:site_name" content="Podlesny Twins">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:url" content="https://plugins.podlesnytwins.com/ricochet/">
-  <meta property="og:title" content="Ricochet — панорама меняется до удара">
-  <meta property="og:description" content="Панорамный переход заканчивается до атаки. macOS: VST3, AU, Standalone. Windows: VST3.">
+  <meta property="og:title" content="Ricochet — панорама меняется до атаки">
+  <meta property="og:description" content="Панорамный переход заканчивается до атаки. macOS: VST3, AU. Windows: VST3.">
   <meta property="og:image" content="https://plugins.podlesnytwins.com/ricochet/assets/ricochet-ui.png">
   <meta property="og:image:width" content="1040">
   <meta property="og:image:height" content="560">
@@ -48,7 +48,7 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="hero-meta">macOS: VST3 / AU / Standalone · Windows: VST3</p>
+          <p class="hero-meta">macOS: VST3 / AU · Windows: VST3</p>
           <h1>Панорамный переход заканчивается до атаки.</h1>
           <p class="hero-sub">Детектор ловит удар и запускает переход раньше него. Ритм задаёт сам материал, без MIDI и без сетки.</p>
           <div class="hero-actions">
@@ -58,7 +58,7 @@
           <p class="hero-fine">14 дней все функции, без регистрации и карты. Покупка — один платёж, без подписки.</p>
         </div>
         <figure class="hero-shot">
-          <picture><source type="image/webp" srcset="/ricochet/assets/ricochet-ui-800.webp 800w, /ricochet/assets/ricochet-ui.webp 1040w" sizes="(max-width: 859px) 100vw, 640px"><img src="assets/ricochet-ui.png?v=169" alt="Интерфейс Ricochet с дисплеями Movement и Detection" width="1040" height="560" loading="eager" fetchpriority="high"></picture>
+          <picture><source type="image/webp" srcset="/ricochet/assets/ricochet-ui-800.webp 800w, /ricochet/assets/ricochet-ui.webp 1040w" sizes="(max-width: 859px) 100vw, 640px"><img src="assets/ricochet-ui.png?v=169" alt="Интерфейс Ricochet: панели Trigger и Motion" width="1040" height="560" loading="eager" fetchpriority="high"></picture>
         </figure>
       </div>
     </section>
@@ -68,8 +68,8 @@
         <div class="text">
           <h2>Переносите весь удар, включая атаку.</h2>
           <p>Soundtoys PanMan переключает панораму от входящего сигнала. В нашем примере он делает это уже во время удара: атака остаётся в одном канале, хвост переносится в другой. Вместо цельного удара получаются две части по разным сторонам стерео.</p>
-          <p>Мы с нуля разработали для Ricochet собственный алгоритм панорамирования с lookahead. Он даёт время завершить переход до того, как прозвучит атака. На схеме видно результат: Ricochet переносит каждый удар целиком, сохраняя атаку и хвост вместе.</p>
-          <p><strong>Панорамный рисунок повторяется от экспорта к экспорту.</strong> При одинаковом материале, настройках и точке начала рендера удары остаются на тех же местах. Работа плагина контролируема и предсказуема, поэтому на выбранную панораму можно опираться и в самых ответственных миксах.</p>
+          <p>Ricochet работает с постоянным lookahead 30 мс: детектор слушает живой вход, а звук в это время лежит в задержке. Этого запаса хватает, чтобы довести переход и закончить его за 5–15 мс до атаки. На схеме результат: удар уезжает целиком, атака и хвост в одной точке.</p>
+          <p><strong>Панорамный рисунок повторяется от экспорта к экспорту.</strong> При одинаковом материале, настройках и точке начала рендера удары ложатся на те же места: генератора случайных чисел в плагине нет, а разброс VARY идёт по фиксированной таблице, которая начинается заново с каждым запуском.</p>
         </div>
         <figure class="waveform-comparison">
           <img class="waveform-comparison__desktop" src="assets/ricochet-panman-comparison.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Сравнение одного сигнала: исходные удары в обоих каналах; в показанном примере Soundtoys PanMan разделяет атаку и хвост между L и R, а Ricochet переносит каждый удар целиком. PanMan выделен коралловым, Ricochet — мятным.">
@@ -115,7 +115,7 @@
           <li class="step">
             <span class="step-num">1</span>
             <h3>Детекция</h3>
-            <p>Детектор отмечает каждый удар на side-chain по порогу. FILTER отсекает то, что за удар считать не надо.</p>
+            <p>Детектор слушает вход самого плагина и отмечает каждый удар по порогу. FILTER убирает из детектора то, что за удар считать не надо.</p>
           </li>
           <li class="step">
             <span class="step-num">2</span>
@@ -128,13 +128,13 @@
             <p>К атаке сигнал уже на другой стороне. Весь удар звучит из одной точки, а не размазывается по ней.</p>
           </li>
         </ol>
-        <p class="section-note">При одинаковом материале, настройках и точке начала экспорта Ricochet повторяет тот же панорамный рисунок.</p>
+        <p class="section-note">При одинаковом материале, настройках и точке начала рендера Ricochet повторяет тот же панорамный рисунок.</p>
       </div>
     </section>
 
     <section id="use-cases" class="use-cases section">
       <div class="container">
-        <h2>Хэты, перкуссия и эдлибы.</h2>
+        <h2>Хэты, перкуссия и эд-либы.</h2>
         <dl class="cases">
           <div class="case">
             <dt>Хай-хэты и перкуссия</dt>
@@ -161,7 +161,7 @@
         <h2>Чем управлять.</h2>
         <div class="control-grid">
           <figure class="control-shot">
-            <picture><source type="image/webp" srcset="/ricochet/assets/ricochet-ui-800.webp 800w, /ricochet/assets/ricochet-ui.webp 1040w" sizes="(max-width: 859px) 100vw, 640px"><img src="assets/ricochet-ui.png?v=169" alt="Крупный план секций Trigger и Motion плагина Ricochet." width="1040" height="560" loading="lazy"></picture>
+            <picture><source type="image/webp" srcset="/ricochet/assets/ricochet-ui-800.webp 800w, /ricochet/assets/ricochet-ui.webp 1040w" sizes="(max-width: 859px) 100vw, 640px"><img src="assets/ricochet-ui.png?v=169" alt="Крупный план секций Trigger и Motion плагина Ricochet" width="1040" height="560" loading="lazy"></picture>
           </figure>
           <div class="control-list">
             <div class="control-group">
@@ -169,15 +169,15 @@
               <dl>
                 <div>
                   <dt>THRESHOLD</dt>
-                  <dd>Порог, при котором детектор считает удар ударом.</dd>
+                  <dd>Линия на метре: не абсолютные дБ, а дБ под собственным пиком материала. Одна настройка работает и на тихом эд-либе, и на горячей шине хэтов.</dd>
                 </div>
                 <div>
                   <dt>FILTER</dt>
-                  <dd>Фильтр side-chain, чтобы отделить нужные транзиенты от паразитных.</dd>
+                  <dd>ФВЧ на детекторе, 24 дБ/окт, по умолчанию 200 Гц. Бочка перестаёт двигать панораму хэтов.</dd>
                 </div>
                 <div>
                   <dt>HOLD</dt>
-                  <dd>Время, в течение которого новые удары не перезапускают пан.</dd>
+                  <dd>Сколько сигнал должен продержаться упавшим от предыдущего удара, прежде чем сработает следующий. Так фраза едет одним движением, а не по слогу.</dd>
                 </div>
               </dl>
             </div>
@@ -185,20 +185,24 @@
               <h3>Motion</h3>
               <dl>
                 <div>
-                  <dt>START L / R</dt>
-                  <dd>Сторона, с которой начинается движение. Детерминировано: одинаковый вход + одинаковый старт = одинаковый выход.</dd>
+                  <dt>START</dt>
+                  <dd>Куда уходит первый удар: LEFT или RIGHT, а при нечётном числе точек — ещё и CENTRE. Пишется в сессию, поэтому каждый экспорт начинает чередование одинаково.</dd>
                 </div>
                 <div>
                   <dt>WIDTH</dt>
-                  <dd>Насколько далеко уходит сигнал в противоположный канал.</dd>
+                  <dd>Насколько далеко от центра расходятся крайние точки. На 100 % удары уходят к самым краям, на 0 % собираются в центре.</dd>
+                </div>
+                <div>
+                  <dt>POINTS</dt>
+                  <dd>Сколько точек в панораме: на 2 удары чередуются между краями, до 8 — идут по ряду и разворачиваются на концах.</dd>
+                </div>
+                <div>
+                  <dt>SETTLE</dt>
+                  <dd>За сколько до атаки переход обязан закончиться: от 5 до 15 мс, тянется мышью по дисплею. Больше не пустит сам движок — переход и запас живут внутри тех же 30 мс.</dd>
                 </div>
                 <div>
                   <dt>VARY</dt>
                   <dd>Velocity задаёт основной разброс, а плавный цикл продолжает движение на ударах одной громкости.</dd>
-                </div>
-                <div>
-                  <dt>MIX</dt>
-                  <dd>Баланс обработанного и оригинального сигнала.</dd>
                 </div>
               </dl>
             </div>
@@ -218,7 +222,7 @@
           <p class="price-note">Оплата картой или через СБП, чек приходит на почту.</p>
           <ul class="formats">
             <li>VST3 — macOS и Windows</li>
-            <li>AU и Standalone — macOS</li>
+            <li>AU — macOS</li>
             <li>macOS: Intel и Apple Silicon</li>
             <li>Windows: 64-bit</li>
           </ul>
@@ -245,7 +249,7 @@
         </details>
         <details>
           <summary>Будет ли результат одинаковым при повторном рендере?</summary>
-          <p>Да. При одинаковом входе и одинаковом START SIDE выход повторяется.</p>
+          <p>Да. При том же входе, тех же настройках и той же точке начала рендера выход повторяется: случайных величин в плагине нет.</p>
         </details>
         <details>
           <summary>Есть ли демо-версия?</summary>
@@ -270,7 +274,7 @@
         </details>
         <details>
           <summary>Какие форматы и платформы поддерживаются?</summary>
-          <p>На macOS — VST3, AU и Standalone; один установщик работает и на Intel, и на Apple Silicon, выбирать нечего. На Windows — VST3: формата AU там не существует, а Standalone мы пока не собираем. Лицензия одна и та же, обе системы считаются одинаково.</p>
+          <p>На macOS — VST3 и AU; один установщик работает и на Intel, и на Apple Silicon, выбирать нечего. На Windows — VST3: формата AU там не существует. Лицензия одна и та же, обе системы считаются одинаково.</p>
         </details>
       </div>
     </section>
@@ -350,7 +354,7 @@
     "image": "https://plugins.podlesnytwins.com/ricochet/assets/ricochet-ui.png",
     "offers": {
       "@type": "Offer",
-      "price": "2",
+      "price": "2499",
       "priceCurrency": "RUB",
       "availability": "https://schema.org/InStock",
       "url": "https://plugins.podlesnytwins.com/ricochet/"
