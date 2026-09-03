@@ -1,3 +1,10 @@
+/* Атрибут hidden обязан выигрывать у любого правила display ниже.
+   Без этого блок, спрятанный из скрипта, остаётся на экране: у
+   .checkout-lead и .field-hint есть свой display, и он сильнее. Поймано
+   на форме триала 2026-09-03 — вводная строка про оплату висела над
+   формой, которая ничего не спишет. */
+[hidden] { display: none !important; }
+
 :root {
   --amber: #f08a35;
   --amber-bright: #ff9b49;
@@ -74,6 +81,11 @@
 .hero-card--ricochet { border-color: rgba(94, 231, 179, .26); }
 .hero-card--ricochet .hero-card-role, .hero-card--ricochet .hero-card-more { color: var(--accent); }
 .hero-card--ricochet:hover { border-color: var(--accent); }
+/* Cutter's card takes the amber the product page already uses, so the hero
+   reads as three products in two colours rather than three colours. */
+.hero-card--cutter { border-color: rgba(240, 138, 53, .3); }
+.hero-card--cutter .hero-card-role, .hero-card--cutter .hero-card-more { color: var(--amber); }
+.hero-card--cutter:hover { border-color: var(--amber); }
 
 /* Шейдер живёт слоем самой секции, а не карточкой: маска растворяет его в фоне. */
 .hero-shader {

@@ -1,8 +1,11 @@
 document.documentElement.classList.add('js');
 
 const products = {
-  ricochet: { title: 'Ricochet', price: 2499 },
-  faraway: { title: 'Faraway', price: 2499 },
+  /* trial: у продукта есть пробный срок, и он идёт ТРЕТЬИМ путём — не оплата и
+     не бесплатная выдача. Общего с оплатой у него нет ничего, кроме диалога;
+     общее с бесплатной выдачей — форма: имя, почта и два раздельных согласия. */
+  ricochet: { title: 'Ricochet', price: 2499, trial: 14 },
+  faraway: { title: 'Faraway', price: 2499, trial: 14 },
   combo: { title: 'Faraway + Ricochet', price: 3999 },
   /* Бесплатный продукт идёт по другому эндпоинту и не уходит в банк: там не
      платёж на ноль рублей, а согласия и ссылка. Флаг здесь — единственное, что
@@ -34,13 +37,37 @@ if (dialog && form) {
   };
   const showError = (message) => { errorBox.textContent = message; errorBox.hidden = false; };
 
-  document.querySelectorAll('[data-checkout]').forEach((button) => {
+  /* Режим диалога живёт здесь, а не в разметке: одна форма на три пути, и то,
+     какой из них выбран, решает нажатая кнопка. */
+  let mode = 'buy';
+  /* Ищем по ДИАЛОГУ, а не по форме: вводная строка и заголовок лежат вне
+     <form>, и поиск внутри неё оставлял на экране обещание «после оплаты» над
+     формой, которая ничего не спишет (поймано 2026-09-03). */
+  const buyBlocks = () => dialog.querySelectorAll('.checkout-buy');
+  const trialBlocks = () => dialog.querySelectorAll('.checkout-trial');
+  const setMode = (next) => {
+    mode = next;
+    buyBlocks().forEach((el) => { el.hidden = next !== 'buy'; });
+    trialBlocks().forEach((el) => { el.hidden = next !== 'trial'; });
+    /* Поле «принимаю оферту» обязательно только на пути оплаты: обязательное и
+       СПРЯТАННОЕ поле не даёт браузеру отправить форму и не говорит почему. */
+    const offer = form.elements.consent;
+    if (offer) offer.required = next === 'buy';
+    /* Надпись на кнопке — часть обещания. «Перейти к оплате» на форме, которая
+       ничего не спишет, читается как ловушка. */
+    submit.textContent = next === 'buy' ? submitLabel : 'Скачать демо';
+  };
+
+  document.querySelectorAll('[data-checkout], [data-trial]').forEach((button) => {
     button.addEventListener('click', () => {
-      const product = products[button.dataset.checkout] ? button.dataset.checkout : productInput.value;
+      const wanted = button.dataset.trial || button.dataset.checkout;
+      const product = products[wanted] ? wanted : productInput.value;
       productInput.value = product;
       const item = products[product];
+      setMode(button.dataset.trial ? 'trial' : (item.free ? 'free' : 'buy'));
       document.getElementById('checkout-title').textContent =
-        item.free ? `${item.title} · бесплатно` : `${item.title} — ${item.price} ₽`;
+        button.dataset.trial ? `${item.title} · ${item.trial} дней бесплатно`
+        : item.free ? `${item.title} · бесплатно` : `${item.title} — ${item.price} ₽`;
       clearError();
       if (typeof dialog.showModal === 'function') {
         dialog.showModal();
@@ -58,6 +85,48 @@ if (dialog && form) {
     if (name.length < 2) { form.elements.name.setAttribute('aria-invalid', 'true'); form.elements.name.focus(); return showError(products[productInput.value] && products[productInput.value].free ? 'Укажите имя — так письмо не будет безличным.' : 'Укажите имя для лицензии.'); }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { form.elements.email.setAttribute('aria-invalid', 'true'); form.elements.email.focus(); return showError('Проверьте адрес почты.'); }
     const free = products[productInput.value] && products[productInput.value].free;
+
+    if (mode === 'trial') {
+      const personal = form.elements.consent_personal;
+      const marketing = form.elements.consent_marketing;
+      /* Диалог без полей согласия — это чужая страница (главная), куда кнопку
+         триала поставили ссылкой. Согласие нельзя получить молча, поэтому
+         вместо запроса уводим человека на страницу продукта с настоящей формой. */
+      if (!personal || !marketing) { window.location.href = `/${productInput.value}/`; return; }
+      if (!personal.checked) { personal.focus(); return showError('Без согласия на обработку данных мы не можем даже сохранить адрес.'); }
+      if (!marketing.checked) { marketing.focus(); return showError('Отметьте согласие на письма — ссылку мы присылаем на почту.'); }
+      submit.disabled = true; submit.textContent = 'Готовим ссылки…';
+      try {
+        const response = await fetch(`${API_BASE}/api/trial`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product: productInput.value, email, name,
+            consent_personal: true, consent_marketing: true
+          })
+        });
+        if (!response.ok) throw new Error(response.status === 503 ? 'Ссылки на скачивание ещё не готовы. Напишите нам на plugins@podlesnytwins.com.' : 'Не удалось получить ссылку. Попробуйте ещё раз.');
+        const data = await response.json();
+        const links = Array.isArray(data.downloads) ? data.downloads : [];
+        if (!links.length) throw new Error('Сервер не вернул ссылку. Напишите нам на plugins@podlesnytwins.com.');
+        const done = dialog.querySelector('.checkout-done');
+        const box = done.querySelector('.checkout-links');
+        box.textContent = '';
+        links.forEach((item) => {
+          const link = document.createElement('a');
+          link.className = 'btn btn-amber btn-large checkout-link';
+          link.href = item.url; link.rel = 'noopener';
+          link.textContent = `Скачать для ${item.label}`;
+          box.appendChild(link);
+        });
+        form.hidden = true; done.hidden = false;
+      } catch (error) {
+        showError(error.message);
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Скачать демо';
+      }
+      return;
+    }
 
     if (free) {
       const personal = form.elements.consent_personal;
