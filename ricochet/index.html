@@ -66,9 +66,10 @@
     <section id="problem" class="problem section">
       <div class="container">
         <div class="text">
-          <h2>LFO не знает, где удар.</h2>
-          <p>Обычный автопан движется по сетке. Переход может попасть внутрь транзиента: начало атаки окажется в одном месте, конец — в другом.</p>
-          <p>Ricochet слушает сам материал. Детектор находит удар и запускает переход заранее.</p>
+          <h2>Удар целиком в новой позиции.</h2>
+          <p>Soundtoys PanMan тоже умеет переключать панораму от входящего сигнала: для этого есть режим Ping Pong. Но если переход идёт во время звучания удара, его атака и хвост могут оказаться в разных каналах.</p>
+          <p>Ricochet использует lookahead. Аудио задерживается на 30 мс, а детектор анализирует сигнал до этой задержки. Плагин успевает завершить панорамный переход до выхода атаки, поэтому удар начинается уже в новой позиции. Между переходами панорама остаётся неподвижной.</p>
+          <p>В примере ниже PanMan разделяет атаку и хвост между каналами, а Ricochet переносит каждый из двух ударов целиком.</p>
         </div>
         <figure class="waveform-comparison">
           <img class="waveform-comparison__desktop" src="assets/ricochet-panman-comparison.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Сравнение одного сигнала: исходные удары в обоих каналах; в показанном примере Soundtoys PanMan разделяет атаку и хвост между L и R, а Ricochet переносит каждый удар целиком. PanMan выделен коралловым, Ricochet — мятным.">
@@ -203,29 +204,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section id="themes" class="themes section">
-      <div class="container">
-        <div class="themes-head">
-          <h2>Восемь тёмных палитр.</h2>
-          <p>Тема меняет только интерфейс и не влияет на звук.</p>
-        </div>
-        <ul class="swatches">
-          <li class="swatch" style="--sw-bg:#0e0f11;--sw-panel:#141619;--sw-accent:#5fd6a8"><span class="swatch-chip"></span>Deep Teal</li>
-          <li class="swatch" style="--sw-bg:#100d0a;--sw-panel:#18130f;--sw-accent:#e0a15f"><span class="swatch-chip"></span>Amber</li>
-          <li class="swatch" style="--sw-bg:#130b08;--sw-panel:#1b110c;--sw-accent:#e8794a"><span class="swatch-chip"></span>Sunset</li>
-          <li class="swatch" style="--sw-bg:#0f0d13;--sw-panel:#16131c;--sw-accent:#b58cf0"><span class="swatch-chip"></span>Violet</li>
-          <li class="swatch" style="--sw-bg:#0c0f12;--sw-panel:#12161b;--sw-accent:#5fb8e0"><span class="swatch-chip"></span>Ice</li>
-          <li class="swatch" style="--sw-bg:#06080e;--sw-panel:#0c0f18;--sw-accent:#889cdd"><span class="swatch-chip"></span>Cobalt Steel</li>
-          <li class="swatch" style="--sw-bg:#0e0f11;--sw-panel:#141718;--sw-accent:#9faebc"><span class="swatch-chip"></span>Graphite Nickel</li>
-          <li class="swatch" style="--sw-bg:#120c07;--sw-panel:#1c1209;--sw-accent:#ec7f30"><span class="swatch-chip"></span>Tube Glow</li>
-        </ul>
-        <figure class="theme-shot">
-          <picture><source type="image/webp" srcset="/ricochet/assets/ricochet-ui-800.webp 800w, /ricochet/assets/ricochet-ui.webp 1040w" sizes="(max-width: 859px) 100vw, 640px"><img src="assets/ricochet-ui.png?v=169" alt="Интерфейс Ricochet в теме Deep Teal." width="1040" height="560" loading="lazy"></picture>
-          <figcaption>Deep Teal, тема по умолчанию</figcaption>
-        </figure>
       </div>
     </section>
 

@@ -757,65 +757,6 @@ p:last-child {
   font-size: 0.9375rem;
 }
 
-/* Themes */
-.themes-head {
-  max-width: 60ch;
-  margin-bottom: 44px;
-}
-
-.swatches {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  list-style: none;
-  padding: 0;
-  margin: 0 0 48px;
-}
-
-@media (min-width: 640px) {
-  .swatches {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.swatch {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--sw-bg);
-  color: var(--text);
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-/* half plate, half accent: the two colours a theme actually changes */
-.swatch-chip {
-  width: 26px;
-  height: 26px;
-  flex: none;
-  border-radius: 7px;
-  background: linear-gradient(90deg, var(--sw-panel) 0 50%, var(--sw-accent) 50% 100%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-
-.theme-shot {
-  margin: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: var(--surface);
-}
-
-.theme-shot figcaption {
-  padding: 14px 20px;
-  color: var(--muted);
-  font-size: 0.875rem;
-  border-top: 1px solid var(--border);
-}
-
 /* Pricing */
 .pricing-inner {
   display: grid;
