@@ -64,15 +64,46 @@
     </section>
 
     <section id="problem" class="problem section">
-      <div class="container split">
+      <div class="container">
         <div class="text">
           <h2>LFO не знает, где удар.</h2>
           <p>Обычный автопан движется по сетке. Переход может попасть внутрь транзиента: начало атаки окажется в одном месте, конец — в другом.</p>
           <p>Ricochet слушает сам материал. Детектор находит удар и запускает переход заранее.</p>
         </div>
-        <div class="diagram diagram--canvas reveal">
-          <canvas id="autopan-canvas" width="560" height="360" aria-label="Анимация: обычный автопан размазывает атаку, Ricochet завершает переход до неё"></canvas>
-        </div>
+        <figure class="waveform-comparison">
+          <img class="waveform-comparison__desktop" src="assets/ricochet-panman-comparison.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Сравнение одного сигнала: исходные удары в обоих каналах; в показанном примере Soundtoys PanMan разделяет атаку и хвост между L и R, а Ricochet переносит каждый удар целиком. PanMan выделен коралловым, Ricochet — мятным.">
+          <div class="waveform-comparison__mobile">
+            <div class="waveform-comparison__row">
+              <h3>Исходный сигнал</h3>
+              <p>До обработки</p>
+              <div class="waveform-comparison__chart" role="img" aria-label="Два целых удара в обоих каналах.">
+                <span class="waveform-comparison__channel waveform-comparison__channel--left" aria-hidden="true">L</span>
+                <span class="waveform-comparison__channel waveform-comparison__channel--right" aria-hidden="true">R</span>
+                <div class="waveform-comparison__crop waveform-comparison__crop--source"><img src="assets/ricochet-panman-comparison.webp" width="1600" height="1000" loading="lazy" decoding="async" alt=""></div>
+              </div>
+            </div>
+            <div class="waveform-comparison__row waveform-comparison__row--panman">
+              <h3>Soundtoys PanMan</h3>
+              <p>Атака и хвост разделены</p>
+              <div class="waveform-comparison__chart" role="img" aria-label="В показанном примере атака и хвост каждого удара расходятся между левым и правым каналами.">
+                <span class="waveform-comparison__channel waveform-comparison__channel--left" aria-hidden="true">L</span>
+                <span class="waveform-comparison__channel waveform-comparison__channel--right" aria-hidden="true">R</span>
+                <div class="waveform-comparison__crop waveform-comparison__crop--panman"><img src="assets/ricochet-panman-comparison.webp" width="1600" height="1000" loading="lazy" decoding="async" alt=""></div>
+              </div>
+            </div>
+            <div class="waveform-comparison__row waveform-comparison__row--ricochet">
+              <h3>Ricochet</h3>
+              <p>Атака и хвост вместе</p>
+              <div class="waveform-comparison__chart" role="img" aria-label="Первый целый удар в правом канале, второй целый удар — в левом.">
+                <span class="waveform-comparison__channel waveform-comparison__channel--left" aria-hidden="true">L</span>
+                <span class="waveform-comparison__channel waveform-comparison__channel--right" aria-hidden="true">R</span>
+                <div class="waveform-comparison__crop waveform-comparison__crop--ricochet"><img src="assets/ricochet-panman-comparison.webp" width="1600" height="1000" loading="lazy" decoding="async" alt=""></div>
+              </div>
+            </div>
+            <p class="waveform-comparison__note">Lookahead: переход заканчивается до атаки.</p>
+          </div>
+          <figcaption>Схема по показанному примеру обработки.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -331,7 +362,6 @@
 </dialog>
 
   <script src="/script.js"></script>
-  <script src="autopan.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",

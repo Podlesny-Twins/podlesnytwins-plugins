@@ -547,27 +547,32 @@ p:last-child {
   max-width: 55ch;
 }
 
-/* Diagram */
-.diagram {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 24px;
-}
+/* The full comparison stays readable at desktop size; mobile reuses the
+   same waveform pixels with native labels above each pair of channels. */
+.problem .text { max-width: 70ch; }
+.waveform-comparison { margin: 40px 0 0; }
+.waveform-comparison__desktop { width: 100%; }
+.waveform-comparison__mobile { display: none; }
+.waveform-comparison figcaption { margin-top: 12px; color: var(--meta); font-size: 1rem; }
 
-.diagram canvas {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.diagram--canvas {
-  padding: 0;
-  overflow: hidden;
-}
-
-.diagram--canvas canvas {
-  border-radius: 12px;
+@media (max-width: 699px) {
+  .waveform-comparison__desktop { display: none; }
+  .waveform-comparison__mobile { display: block; }
+  .waveform-comparison__row { padding: 24px 0; border-top: 1px solid var(--border); }
+  .waveform-comparison__row h3 { margin: 0 0 6px; font-family: var(--font-display); font-size: 2rem; font-weight: 400; line-height: 1.15; }
+  .waveform-comparison__row p { margin: 0; font-size: 1rem; color: var(--muted); }
+  .waveform-comparison__row--panman h3 { color: #cc9690; }
+  .waveform-comparison__row--ricochet h3 { color: var(--accent); }
+  .waveform-comparison__chart { position: relative; margin-top: 20px; padding-left: 24px; }
+  .waveform-comparison__channel { position: absolute; left: 0; transform: translateY(-50%); font-size: 0.875rem; font-weight: 500; line-height: 1; color: var(--muted); }
+  .waveform-comparison__channel--left { top: 21.58%; }
+  .waveform-comparison__channel--right { top: 78.95%; }
+  .waveform-comparison__crop { position: relative; overflow: hidden; aspect-ratio: 1195 / 190; }
+  .waveform-comparison__crop img { position: absolute; width: 133.891214%; max-width: none; height: auto; left: -30.543933%; }
+  .waveform-comparison__crop--source img { top: -50%; }
+  .waveform-comparison__crop--panman img { top: -197.368421%; }
+  .waveform-comparison__crop--ricochet img { top: -344.736842%; }
+  .waveform-comparison__note { margin: 12px 0 0; font-size: 1rem; color: var(--muted); }
 }
 
 /* Steps — a real sequence, so the numerals stay; the badges do not */
