@@ -218,3 +218,13 @@
   .faraway-control-shot { aspect-ratio: 2.66 / 1; }
   .faraway-control-shot img { width: 100%; height: auto; object-fit: contain; }
 }
+
+/* Кабинет: блок рассылки подсвечивается, когда человек пришёл по подарочной
+   ссылке и рассылка ещё не включена — это тот шаг, ради которого его позвали. */
+.account-updates { margin: 32px 0; }
+.account-updates.attention {
+  outline: 2px solid var(--amber);
+  outline-offset: 12px;
+  border-radius: 8px;
+  transition: outline-color .6s ease;
+}

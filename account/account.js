@@ -269,6 +269,7 @@ async function load() {
 
   const data = await res.json();
   document.querySelector('.account-email').textContent = data.email;
+  document.getElementById('marketing-toggle').checked = Boolean(data.marketing);
 
   minPassword = data.min_password || 10;
   document.getElementById('password-title').textContent = data.has_password ? 'Пароль.' : 'Задайте пароль.';
@@ -287,7 +288,40 @@ async function load() {
   }
 
   show('account');
-  return true;
+  return data;
+}
+
+/* --- письма о новых версиях ---------------------------------------------- */
+
+const marketingToggle = document.getElementById('marketing-toggle');
+const marketingError = document.querySelector('#updates .checkout-error');
+
+marketingToggle.addEventListener('change', async () => {
+  marketingError.hidden = true;
+  const wanted = marketingToggle.checked;
+  marketingToggle.disabled = true;
+  try {
+    const res = await api('/api/account/marketing', {
+      method: 'POST', body: JSON.stringify({ enabled: wanted })
+    });
+    if (!res.ok) throw new Error(String(res.status));
+    const data = await res.json();
+    marketingToggle.checked = Boolean(data.marketing);
+  } catch (e) {
+    // Возвращаем как было: галочка не должна обещать то, чего сервер не записал.
+    marketingToggle.checked = !wanted;
+    marketingError.textContent = 'Не удалось сохранить. Попробуйте ещё раз.';
+    marketingError.hidden = false;
+  } finally {
+    marketingToggle.disabled = false;
+  }
+});
+
+function spotlightUpdates() {
+  const box = document.getElementById('updates');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  box.classList.add('attention');
+  window.setTimeout(() => box.classList.remove('attention'), 1600);
 }
 
 /* --- данные и удаление ---------------------------------------------------- */
@@ -334,7 +368,13 @@ logoutBtn.addEventListener('click', async () => {
     const res = await api('/api/account/session', {
       method: 'POST', body: JSON.stringify({ token })
     });
-    if (res.ok) { await load(); return; }
+    if (res.ok) {
+      const me = await load();
+      // Пришёл по ссылке из письма (чаще всего — подарочного) и рассылку ещё
+      // не включал: показываем ему ровно тот блок, ради которого звали.
+      if (me && !me.marketing) spotlightUpdates();
+      return;
+    }
     show('expired');
     return;
   }

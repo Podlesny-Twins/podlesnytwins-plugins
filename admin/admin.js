@@ -28,7 +28,7 @@ async function dashboard(q=''){
   const res=await api('/api/admin/dashboard?q='+encodeURIComponent(q));
   if(res.status===401){auth.hidden=false;crm.hidden=true;return;}
   const data=await res.json();
-  document.getElementById('metrics').innerHTML=metric('Всего заказов',data.summary.orders)+metric('Оплачено, ₽',Number(data.summary.revenue).toFixed(2))+metric('Бесплатных выдач',data.summary.free??0)+metric('Согласий на письма',data.summary.subscribers??0)+data.products.map(p=>metric(esc(p.title||p.product),`${p.orders} / ${Number(p.revenue).toFixed(2)} ₽`)).join('');
+  document.getElementById('metrics').innerHTML=metric('Всего заказов',data.summary.orders)+metric('Оплачено, ₽',Number(data.summary.revenue).toFixed(2))+metric('Бесплатных выдач',data.summary.free??0)+metric('Подарков',data.summary.gifts??0)+metric('Согласий на письма',data.summary.subscribers??0)+data.products.map(p=>metric(esc(p.title||p.product),`${p.orders} / ${Number(p.revenue).toFixed(2)} ₽`)).join('');
   document.getElementById('csv').href=API+'/api/admin/export.csv?q='+encodeURIComponent(q);
   const box=document.getElementById('orders');box.textContent='';
   if(!data.orders.length){box.innerHTML='<tr><td colspan="7">Заказов по этому запросу нет. Измените строку поиска.</td></tr>';return;}

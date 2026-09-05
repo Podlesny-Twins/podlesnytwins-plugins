@@ -73,6 +73,16 @@
         <p class="account-email"></p>
         <div id="purchases"></div>
 
+        <section class="account-updates" id="updates">
+          <h2>Письма о новых версиях.</h2>
+          <p>Когда выйдет новая версия ваших плагинов, пришлём письмо с изменениями и ссылками. Отписаться можно здесь же или по ссылке в письме.</p>
+          <label class="check">
+            <input type="checkbox" id="marketing-toggle">
+            <span>Присылать письма о новых версиях</span>
+          </label>
+          <p class="checkout-error" role="alert" hidden></p>
+        </section>
+
         <section class="account-password">
           <h2 id="password-title">Пароль.</h2>
           <p id="password-lead">Задайте пароль, чтобы входить без письма.</p>
@@ -102,7 +112,7 @@
       <!-- 4. ошибка входа по ссылке -->
       <section class="account-pane" id="pane-expired" hidden>
         <h1>Ссылка не сработала.</h1>
-        <p>Она одноразовая и действует 15 минут — скорее всего, просто истекла или уже была использована.</p>
+        <p>Ссылка одноразовая — срок её действия истёк или она уже была использована.</p>
         <div class="status-actions">
           <button class="btn btn-primary" type="button" id="retry-btn">Запросить новую</button>
         </div>
