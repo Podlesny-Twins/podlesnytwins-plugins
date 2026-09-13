@@ -162,13 +162,22 @@
     var submit = document.getElementById('gate-submit');
 
     /* Куда вернуть после ввода. Открытый редирект здесь не нужен: берём
-       только собственные пути сайта. «//evil.com» — валидный путь для
-       location, но уводит на чужой домен, поэтому отсекаем отдельно. */
+       только собственные пути сайта.
+
+       Разбирать строку руками нельзя — проверено 2026-09-13: фильтр
+       «начинается с / и не с //» пропускал `?next=/\evil.com`, а браузер
+       по спецификации URL считает бэкслэш тем же слэшем и уводил на
+       https://evil.com/. Поэтому нормализацию делает сам парсер, а мы
+       сравниваем origin результата: мимо него не проходит ни бэкслэш,
+       ни `//host`, ни `https:host`, ни то, что придумают завтра. */
     function safeNext() {
       var raw = new URLSearchParams(location.search).get('next');
-      if (!raw || raw.charAt(0) !== '/' || raw.slice(0, 2) === '//') return '/';
-      if (raw.indexOf('/guard') === 0) return '/';
-      return raw;
+      if (!raw) return '/';
+      var url;
+      try { url = new URL(raw, location.origin); } catch (e) { return '/'; }
+      if (url.origin !== location.origin) return '/';
+      if (url.pathname.indexOf('/guard') === 0) return '/';
+      return url.pathname + url.search + url.hash;
     }
 
     function say(message) {
