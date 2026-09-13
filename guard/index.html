@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Доступ по паролю — Podlesny Twins</title>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <link rel="icon" href="/ricochet/assets/favicon.svg" type="image/svg+xml">
+  <!-- Шрифты, токены и классы .btn/.field берём у сайта: заглушка не должна
+       заводить собственную типографику ради четырёх элементов. -->
+  <link rel="stylesheet" href="/ricochet/styles.css">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .guard {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+    }
+    .guard-card {
+      width: 100%;
+      max-width: 360px;
+    }
+    .guard-mark {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--meta);
+      margin: 0 0 28px;
+    }
+    .guard-card h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .guard-lead {
+      color: var(--muted);
+      font-size: 0.9375rem;
+      margin: 0 0 28px;
+    }
+    /* Кнопка тут единственное действие — тянем на всю ширину поля. */
+    .guard-card .btn { width: 100%; }
+    .guard-error { color: var(--danger); }
+  </style>
+</head>
+<body>
+
+  <main class="guard">
+    <div class="guard-card">
+      <p class="guard-mark">Podlesny&nbsp;Twins</p>
+      <h1>Сайт закрыт.</h1>
+      <p class="guard-lead">Идёт подготовка к запуску. Введите пароль, чтобы посмотреть.</p>
+
+      <form id="guard-form" novalidate>
+        <label class="field">
+          <span class="field-label">Пароль</span>
+          <input type="password" id="guard-pass" name="password"
+                 autocomplete="current-password" autocapitalize="off"
+                 spellcheck="false" required autofocus>
+        </label>
+        <span class="field-hint guard-error" id="guard-hint" role="alert" hidden></span>
+        <button class="btn btn-primary" type="submit" id="guard-submit">Войти</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+  (function () {
+    var KEY = 'pt_site_guard';
+    var SALT = 'pt-guard-2026';
+    var TOKEN = 'b14b95142810212a037dc7767f0a539ee6a562d5daec5e80de6390825dc9a4c1';
+
+    var form = document.getElementById('guard-form');
+    var input = document.getElementById('guard-pass');
+    var hint = document.getElementById('guard-hint');
+    var submit = document.getElementById('guard-submit');
+
+    /* Куда вернуть после ввода. Открытый редирект здесь не нужен: берём
+       только собственные пути сайта. «//evil.com» — валидный путь для
+       location, но уводит на чужой домен, поэтому отсекаем отдельно. */
+    function safeNext() {
+      var raw = new URLSearchParams(location.search).get('next');
+      if (!raw || raw.charAt(0) !== '/' || raw.slice(0, 2) === '//') return '/';
+      if (raw.indexOf('/guard') === 0) return '/';
+      return raw;
+    }
+
+    function say(message) {
+      hint.textContent = message;
+      hint.hidden = !message;
+      input.setAttribute('aria-invalid', message ? 'true' : 'false');
+    }
+
+    function digest(value) {
+      var bytes = new TextEncoder().encode(SALT + ':' + value);
+      return crypto.subtle.digest('SHA-256', bytes).then(function (buffer) {
+        return Array.prototype.map.call(new Uint8Array(buffer), function (b) {
+          return ('0' + b.toString(16)).slice(-2);
+        }).join('');
+      });
+    }
+
+    var unlocked = false;
+    try { unlocked = localStorage.getItem(KEY) === TOKEN; } catch (e) {}
+    if (unlocked) { location.replace(safeNext()); return; }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var value = input.value;
+      if (!value) { say('Введите пароль.'); input.focus(); return; }
+
+      // crypto.subtle живёт только в защищённом контексте: по http или
+      // из файла его нет, и без этой ветки форма молча ничего не делала бы.
+      if (!window.crypto || !crypto.subtle) {
+        say('Проверка пароля недоступна: откройте сайт по https.');
+        return;
+      }
+
+      submit.disabled = true;
+      say('');
+      digest(value).then(function (hash) {
+        if (hash !== TOKEN) {
+          submit.disabled = false;
+          say('Пароль не подходит.');
+          input.select();
+          return;
+        }
+        try { localStorage.setItem(KEY, TOKEN); } catch (e) {}
+        location.replace(safeNext());
+      }).catch(function () {
+        submit.disabled = false;
+        say('Не получилось проверить пароль. Попробуйте ещё раз.');
+      });
+    });
+  })();
+  </script>
+
+</body>
+</html>
