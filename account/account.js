@@ -249,7 +249,34 @@ function purchaseCard(p, limit) {
     ? `Занято мест: ${p.devices.length} из ${limit}`
     : `Места активации свободны: ${limit}`;
 
-  card.append(head, actions, install, devHead);
+  card.append(head, actions, install);
+
+  // Прежняя версия приходит только тем, кто получил продукт до смены плагина
+  // (сервер решает по дате заказа); у остальных ключа legacy нет вовсе.
+  if (p.legacy && Array.isArray(p.legacy.downloads) && p.legacy.downloads.length) {
+    const legacy = document.createElement('div');
+    legacy.className = 'legacy';
+    const legacyHead = document.createElement('p');
+    legacyHead.className = 'legacy-head';
+    legacyHead.textContent = p.legacy.title;
+    const legacyNote = document.createElement('p');
+    legacyNote.className = 'muted-note';
+    legacyNote.textContent = p.legacy.note;
+    const legacyActions = document.createElement('div');
+    legacyActions.className = 'status-actions';
+    p.legacy.downloads.forEach((download) => {
+      const dl = document.createElement('a');
+      dl.className = 'btn btn-secondary btn-small';
+      dl.href = download.url;
+      dl.rel = 'noopener';
+      dl.textContent = `Скачать для ${download.label}`;
+      legacyActions.append(dl);
+    });
+    legacy.append(legacyHead, legacyNote, legacyActions);
+    card.append(legacy);
+  }
+
+  card.append(devHead);
   p.devices.forEach((d) => card.append(deviceRow(p, d, limit)));
 
   if (p.devices.length) {

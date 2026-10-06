@@ -1326,6 +1326,25 @@ body:has(details.demo[open]) .buybar {
   color: var(--muted);
 }
 
+/* Прежняя версия в карточке покупки: отделена линией, чтобы две пары кнопок
+   «скачать» не читались как одна. Показывается только тем, у кого она была. */
+.legacy {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.legacy-head {
+  margin: 0 0 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.legacy .status-actions {
+  margin-top: 12px;
+}
+
 .devices-head {
   margin: 28px 0 12px;
   font-size: 0.875rem;
