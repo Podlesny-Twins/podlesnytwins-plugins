@@ -209,7 +209,9 @@ function purchaseCard(p, limit) {
 
   const head = document.createElement('div');
   head.className = 'purchase-head';
-  head.innerHTML = `<h2>${p.title}</h2><span class="purchase-order">заказ ${p.order}</span>`;
+  // номер версии — шрифтом текста: у заголовочного шрифта «1.0» читается как «1.O»
+  const titleHtml = String(p.title).replace(/ (\d+(?:\.\d+)*)$/, ' <span class="ver">$1</span>');
+  head.innerHTML = `<h2>${titleHtml}</h2><span class="purchase-order">заказ ${p.order}</span>`;
 
   const actions = document.createElement('div');
   actions.className = 'status-actions';
