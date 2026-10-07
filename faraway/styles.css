@@ -1,0 +1,87 @@
+/* Faraway: product typography and a quiet, open reading layout. */
+.faraway-page {
+  --font-display: 'Golos Text', 'Helvetica Neue', Arial, sans-serif;
+  --text: #eeece7;
+  --lead: #d8d5cf;
+  --muted: #b4b1ab;
+  --meta: #99968f;
+  --amber: #d9a15e;
+  --amber-bright: #e7b77b;
+  --amber-dim: #a77b48;
+  --border: #30302d;
+  font-weight: 400;
+  line-height: 1.7;
+  scrollbar-color: #656159 var(--bg);
+  caret-color: var(--amber);
+}
+.faraway-page ::selection { background: #d9a15e; color: #15120e; }
+.faraway-page .site-header { background: var(--bg); backdrop-filter: none; }
+.faraway-page .header-inner { padding: 18px 24px; }
+.faraway-page .logo { font-family: 'SaarSP', Arial, sans-serif; }
+.faraway-page .nav { font-family: var(--font-body); font-size: .875rem; letter-spacing: 0; gap: 24px; }
+.faraway-page h1, .faraway-page h2 { letter-spacing: -.025em; font-weight: 500; }
+.faraway-page h2 { font-size: clamp(1.6rem, 2.7vw, 2.25rem); line-height: 1.25; margin-bottom: 28px; }
+.faraway-page .section { padding: 80px 0; }
+.faraway-page .hero { padding: 144px 0 88px; }
+.faraway-page .hero-grid { gap: 52px; }
+.faraway-page .hero-copy h1 { font-size: clamp(2.5rem, 4.8vw, 4rem); max-width: none; margin-bottom: 18px; line-height: 1.1; }
+.faraway-page .hero-copy h1 .ver { font-size: 1em; font-weight: inherit; color: var(--muted); }
+.faraway-page .hero-tagline { font-size: clamp(1.4rem, 2.5vw, 1.9rem); line-height: 1.35; color: var(--text); max-width: 24ch; margin-bottom: 22px; letter-spacing: -.015em; }
+.faraway-page .hero-sub { font-size: 1.0625rem; line-height: 1.7; font-weight: 400; text-wrap: pretty; max-width: 48ch; margin-bottom: 28px; }
+.faraway-page .hero-meta { letter-spacing: 0; font-size: .8125rem; font-weight: 400; margin: 22px 0 8px; }
+.faraway-page .hero-fine { font-size: .8125rem; line-height: 1.65; color: var(--meta); max-width: 50ch; }
+.faraway-page .hero-shot { margin: 0; border: 0; border-radius: 0; box-shadow: none; background: none; }
+.faraway-page .btn { border-radius: 5px; font-weight: 500; box-shadow: none; }
+.faraway-page .btn:hover { box-shadow: none; transform: none; }
+.faraway-page .btn-large { font-size: .9375rem; padding: 16px 22px; min-height: 48px; }
+.faraway-page .hero-actions { gap: 10px; margin-bottom: 0; }
+.faraway-page .depth-problem { border-top: 1px solid var(--border); }
+.faraway-page .split { align-items: start; }
+.faraway-page .depth-map { grid-template-columns: 1fr; gap: 0; align-self: center; max-width: 360px; width: 100%; justify-self: end; }
+.faraway-page .depth-map span { min-height: 0; display: block; padding: 12px 0; border: 0; border-bottom: 1px solid var(--border); font-size: .9375rem; font-weight: 400; letter-spacing: 0; }
+.faraway-page .depth-map .depth-core { padding: 0 0 18px; font-family: var(--font-body); font-size: 1.125rem; color: var(--amber); background: none; border-color: var(--border); }
+.faraway-page .case { padding: 28px 0; }
+.faraway-page .case dt { font-family: var(--font-body); font-size: 1.25rem; font-weight: 500; letter-spacing: -.015em; color: var(--text); }
+.faraway-page .case dd { max-width: 70ch; line-height: 1.7; }
+.faraway-page .case dd p { margin-bottom: 14px; }
+.faraway-page .case dd p:last-child { margin-bottom: 0; }
+.faraway-page .control-grid { display: block; }
+.faraway-page .control-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 72px; }
+.faraway-page .control-group h3 { text-transform: none; font-size: 1.25rem; font-weight: 500; letter-spacing: -.015em; color: var(--text); margin-bottom: 26px; }
+.faraway-page .control-group dt { font-size: 1rem; font-weight: 500; margin-bottom: 8px; }
+.faraway-page .control-group dd { font-size: 1rem; line-height: 1.7; }
+.faraway-page .control-group dl > div { padding-bottom: 22px; margin-bottom: 22px; }
+.faraway-page .combo-band { background: var(--surface); }
+.faraway-page .combo-band h2 { font-size: clamp(1.5rem, 2.4vw, 1.875rem); }
+.faraway-page .combo-band h2::before { content: none; }
+.faraway-page .combo-band .ver { font-weight: inherit; font-size: 1em; }
+.faraway-page .combo-band .hero-actions { align-self: center; }
+.faraway-page .pricing-inner { align-items: start; }
+.faraway-page .price-card { background: none; border: 0; border-radius: 0; padding: 0; }
+.faraway-page .price-current { font-family: var(--font-body); font-weight: 500; font-size: 3.25rem; font-variant-numeric: lining-nums tabular-nums; }
+.faraway-page .formats { display: block; margin-bottom: 28px; }
+.faraway-page .formats li { background: none; border-radius: 0; padding: 7px 0; font-weight: 400; font-size: .9375rem; color: var(--muted); border-bottom: 1px solid var(--border); }
+.faraway-page .faq-inner { max-width: 840px; }
+.faraway-page .faq summary { font-weight: 500; line-height: 1.5; padding-right: 36px; }
+.faraway-page .faq details p { line-height: 1.75; }
+.faraway-page .site-footer h3 { font-family: var(--font-body); font-size: 1rem; font-weight: 500; }
+.faraway-page a { text-underline-offset: .2em; }
+.faraway-page .site-footer a:hover { text-decoration: underline; }
+@media (min-width: 980px) {
+  .faraway-page .hero-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); }
+}
+@media (max-width: 859px) {
+  .faraway-page .hero { padding: 108px 0 56px; }
+  .faraway-page .hero-grid { gap: 36px; }
+  .faraway-page .section { padding: 56px 0; }
+  .faraway-page .depth-map { max-width: none; justify-self: stretch; }
+  .faraway-page .control-list { grid-template-columns: 1fr; gap: 40px; }
+  .faraway-page .hero-sub { max-width: 60ch; }
+}
+@media (max-width: 480px) {
+  .faraway-page .container { padding-left: 20px; padding-right: 20px; }
+  .faraway-page .hero-copy h1 { font-size: 2.5rem; }
+  .faraway-page .hero-tagline { font-size: 1.5rem; }
+  .faraway-page .header-inner { gap: 12px; }
+  .faraway-page .header-buy { font-size: .75rem; padding: 10px 12px; }
+}
