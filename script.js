@@ -10,7 +10,8 @@ const products = {
   /* Бесплатный продукт идёт по другому эндпоинту и не уходит в банк: там не
      платёж на ноль рублей, а согласия и ссылка. Флаг здесь — единственное, что
      отличает две ветки ниже; всё остальное в диалоге общее. */
-  cutter: { title: 'Cutter', free: true }
+  cutter: { title: 'Cutter', free: true },
+  inspirator: { title: 'INSPIRATOR', free: true }
 };
 
 document.querySelectorAll('.reveal').forEach((el) => {

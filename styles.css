@@ -88,6 +88,9 @@
 .hero-card--cutter { border-color: rgba(240, 138, 53, .3); }
 .hero-card--cutter .hero-card-role, .hero-card--cutter .hero-card-more { color: var(--amber); }
 .hero-card--cutter:hover { border-color: var(--amber); }
+.hero-card--inspirator { border-color: rgba(240, 138, 53, .3); }
+.hero-card--inspirator .hero-card-role, .hero-card--inspirator .hero-card-more { color: var(--amber); }
+.hero-card--inspirator:hover { border-color: var(--amber); }
 
 /* Шейдер живёт слоем самой секции, а не карточкой: маска растворяет его в фоне. */
 .hero-shader {
@@ -174,8 +177,15 @@
    токен, а не третий оттенок ради непохожести. Окно у него 3:2 — картинка
    заметно ниже, чем у соседей, и растягивать её до их высоты нельзя. */
 .product-panel--cutter { --accent: var(--amber); }
+.product-panel--inspirator { --accent: var(--amber); }
 .cutter-page { --accent: var(--amber); --accent-dim: var(--amber-dim); --accent-glow: var(--amber-glow); }
 .cutter-shot img { width: 100%; max-width: 100%; transform: none; }
+.inspirator-controls { display: grid; gap: 28px 40px; }
+.inspirator-gallery { display: grid; gap: 16px; margin-top: 28px; }
+.inspirator-gallery figure { margin: 0; }
+.inspirator-gallery img { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); }
+@media (min-width: 720px) { .inspirator-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } .inspirator-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .inspirator-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .cutter-control-shot { aspect-ratio: 1.5 / 1; }
 .cutter-control-shot img { width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: center; }
 
