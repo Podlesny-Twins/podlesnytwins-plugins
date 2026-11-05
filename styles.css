@@ -135,7 +135,9 @@ a { color: inherit; text-decoration-color: var(--hairline); text-underline-offse
   display: inline-block;
   margin-left: 0.34em;
   font-family: var(--font-body);
-  font-size: 0.42em;
+  /* max(), а не чистые em: на узком экране имя падает до 36 px, и доля от
+     него уводила бы цифру под порог читаемости. */
+  font-size: max(1rem, 0.42em);
   font-weight: 600;
   letter-spacing: 0;
   vertical-align: 0.12em;
@@ -145,7 +147,7 @@ a { color: inherit; text-decoration-color: var(--hairline); text-underline-offse
   display: inline-block;
   margin-left: 0.6em;
   font-family: var(--font-body);
-  font-size: 0.3em;
+  font-size: max(0.8125rem, 0.3em);
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--ink-soft);
