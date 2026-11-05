@@ -6,30 +6,35 @@ brand
 
 ## Users
 
-Звукорежиссёры, продюсеры и музыканты, которые сводят хип-хоп, поп и электронику. Приходят, чтобы купить или скачать демо плагина Ricochet.
+Друзья, коллеги и ученики Podlesny Twins — звукорежиссёры и продюсеры, которым
+дали ссылку. Приходят за файлом, а не за решением о покупке.
 
 ## Product Purpose
 
-Продать аудиоплагин Ricochet — transient-triggered autopan от Podlesny Twins. Объяснить, чем он отличается от обычных LFO-паннеров, и дать понять механику за 30 секунд.
+Раздать пять плагинов Podlesny Twins: Faraway 1, Faraway 0, Ricochet, Cutter,
+INSPIRATOR. С ноября 2026 они не продаются — ни лицензий, ни активации, ни
+триала. Страница называет вещь и отдаёт установщик.
 
 ## Brand Personality
 
-Техничный. Конкретный. Без маркетинговой сляпи. Премиальный, но не понтовый.
+Техничный. Конкретный. Без маркетинговой сляпи. Молчаливый: раз не продаём,
+то и не уговариваем.
 
 ## Anti-references
 
+- Любая коммерция: цены, «купить», комбо, демо, обратный отсчёт.
+- Описания возможностей, вопросы-ответы, отзывы, аудиопримеры.
 - Generic SaaS landing page aesthetics.
-- AI-generated plugin marketing: "революционный", "раскрой потенциал", "бесшовный workflow".
-- Identical card grids with icon + heading + text.
-- Tiny uppercase eyebrows above every section.
-- Stock photos or abstract 3D shapes.
+- AI-generated plugin marketing: «революционный», «раскрой потенциал».
+- Одинаковые карточки «иконка + заголовок + текст».
 
 ## Design Principles
 
-1. Show the plugin, don't describe the vibe.
-2. Every claim must be привязан к механике.
-3. Dark studio-first: работает в тёмной студии без выжигания глаз.
-4. Typography carries identity: шрифты с основного сайта Podlesny Twins.
+1. Имя, предмет, кнопка. Всё остальное лишнее.
+2. Faraway 1 и Faraway 0 — разные плагины, а не версии: прежние проекты
+   открываются только прежним.
+3. Единственный обязательный текст — про неподписанный установщик.
+4. Typography carries identity: шрифты Podlesny Twins, не системные.
 5. Motion is intentional, not decorative.
 
 ## Accessibility & Inclusion

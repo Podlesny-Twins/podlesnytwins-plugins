@@ -3,108 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- Заглушка на время закрытой подготовки к запуску: см. /guard.js -->
-  <script src="/guard.js"></script>
-  <noscript><meta http-equiv="refresh" content="0; url=/guard/"><style>body{display:none}</style></noscript>
-  <title>Faraway, Ricochet, Cutter и INSPIRATOR — плагины Podlesny Twins</title>
-  <meta name="description" content="Faraway 1.0 отодвигает источник в глубину, Ricochet двигает каждый удар по панораме, Cutter укорачивает звук по его же ударам, INSPIRATOR сравнивает микс с референсом. Четыре плагина Podlesny Twins.">
+  <title>Плагины Podlesny Twins</title>
+  <meta name="description" content="Faraway 1, Faraway 0, Ricochet, Cutter и INSPIRATOR — плагины Podlesny Twins для macOS и Windows. Бесплатно, без лицензий и активации.">
   <link rel="canonical" href="https://plugins.podlesnytwins.com/">
-  <link rel="icon" href="/ricochet/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/ricochet/styles.css">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <!--
-    THESIS: Два разных пространственных решения, собранные как одна продуктовая линейка.
-    OWN-WORLD: Тёмная аппаратная стойка; зелёный Ricochet и янтарный Faraway — функциональные сигналы, не декор.
-    STORY: Обещание → выбор инструмента → совместная работа → выгода комбо → покупка.
-    FIRST VIEWPORT: Название линейки, два результата и сразу два реальных интерфейса.
-    FORM: Полноэкранная студийная витрина с крупными изображениями плагинов и спокойной типографикой.
-    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    THESIS: пять инструментов, которые мы сделали для себя. Их можно взять.
+    OWN-WORLD: белый камень и тёмные панели плагинов как предметы на нём.
+    STORY: сколько их и сколько стоят -> каждый по очереди -> как поставить.
+    FIRST VIEWPORT: одна строка о том, что это и что бесплатно. Больше ничего.
+    FORM: вертикальная витрина предметов, по одному на экран.
+    FINISH: ни цены, ни лицензии, ни одного слова, которое продаёт.
   -->
-  <header class="site-header"><div class="container header-inner">
-    <a href="/" class="logo">Podlesny&nbsp;Twins</a>
-    <nav class="nav" aria-label="Основная навигация"><a href="/faraway/">Faraway</a><a href="/ricochet/">Ricochet</a><a href="#combo">Комбо</a><a href="/account/">Лицензии</a></nav>
-    <!-- Ниже 860px это единственное действие в шапке: без него на телефоне
-         там оставался один логотип. Ведёт не «на полку» — якорь доезжает до
-         панелей и сразу раскрывает первое меню демо (см. data-open-demo). -->
-    <a class="btn btn-primary btn-small header-buy header-buy--mobile" href="#plugins" data-open-demo>Демо 14 дней</a>
-  </div></header>
+  <header class="masthead">
+    <a class="wordmark" href="/">Podlesny&nbsp;Twins</a>
+  </header>
 
   <main>
-    <section class="home-hero">
-      <canvas class="hero-shader" data-hero-shader aria-hidden="true"></canvas>
-      <div class="container hero-grid">
-      <div class="hero-copy">
-        <h1>Четыре плагина: глубина, панорама, длина звука, сравнение с референсом.</h1>
-        <div class="hero-actions"><a class="btn btn-primary btn-large" href="#plugins">Демо 14 дней</a><a class="btn btn-secondary btn-large" href="#plugins">Как это работает</a></div>
-      </div>
-      <div class="hero-cards">
-        <a class="hero-card hero-card--faraway" href="/faraway/">
-          <span class="hero-card-role">Глубина</span>
-          <span class="hero-card-name">Faraway <span class="ver">1.0</span></span>
-          <p class="hero-card-promise">Отодвигает источник одной ручкой.</p>
-          <span class="hero-card-more">Открыть · 2499 ₽</span>
-        </a>
-        <a class="hero-card hero-card--ricochet" href="/ricochet/">
-          <span class="hero-card-role">Панорама</span>
-          <span class="hero-card-name">Ricochet</span>
-          <p class="hero-card-promise">Автопан, который успевает до атаки.</p>
-          <span class="hero-card-more">Открыть · 2499 ₽</span>
-        </a>
-        <a class="hero-card hero-card--cutter" href="/cutter/">
-          <span class="hero-card-role">Длина</span>
-          <span class="hero-card-name">Cutter</span>
-          <p class="hero-card-promise">Укорачивает звук по его собственным ударам.</p>
-          <span class="hero-card-more">Открыть · бесплатно</span>
-        </a>
-        <a class="hero-card hero-card--inspirator" href="/inspirator/">
-          <span class="hero-card-role">Сравнение</span>
-          <span class="hero-card-name">INSPIRATOR</span>
-          <p class="hero-card-promise">Сравнивает микс с референсом на мастер-шине.</p>
-          <span class="hero-card-more">Открыть · бесплатно</span>
-        </a>
-      </div>
-    </div></section>
-
-    <section class="product-showcase" id="plugins">
-      <article class="product-panel product-panel--faraway"><div class="container product-panel-grid">
-        <div class="product-panel-copy"><h2>Faraway <span class="ver">1.0</span></h2><p class="product-promise">Отодвинуть источник одной ручкой.</p><p>DISTANCE ведёт компрессор, две полки тона, комнату с тремя пространствами и ширину стерео — так же, как настоящее расстояние.</p><div class="hero-actions"><button class="btn btn-amber btn-large" data-trial="faraway">Демо 14 дней</button><button class="btn btn-secondary btn-large" data-checkout="faraway">Купить за 2499 ₽</button><a class="btn btn-secondary btn-large" href="/faraway/">О Faraway 1.0</a></div></div>
-        <figure class="showcase-shot showcase-shot--wide"><picture><source type="image/webp" srcset="/faraway/assets/faraway-ui-800.webp 800w, /faraway/assets/faraway-ui-1600.webp 1600w, /faraway/assets/faraway-ui.webp 3120w" sizes="(max-width: 859px) 100vw, (max-width: 1199px) 60vw, 900px"><img src="/faraway/assets/faraway-ui.png" alt="Интерфейс Faraway 1.0 с секциями Compressor, Distance, Tone, Space и Width" width="2656" height="1172" loading="lazy" decoding="async"></picture></figure>
-      </div></article>
-      <article class="product-panel product-panel--ricochet"><div class="container product-panel-grid product-panel-grid--reverse">
-        <figure class="showcase-shot"><picture><source type="image/webp" srcset="/ricochet/assets/ricochet-ui-800.webp 800w, /ricochet/assets/ricochet-ui.webp 1040w" sizes="(max-width: 859px) 100vw, 640px"><img src="/ricochet/assets/ricochet-ui.png?v=169" alt="Интерфейс Ricochet: панели Trigger и Motion" width="1040" height="560" loading="lazy" decoding="async"></picture></figure>
-        <div class="product-panel-copy"><h2>Ricochet</h2><p class="product-promise">Панорамный переход заканчивается до атаки.</p><p>Детектор ловит удар и запускает переход раньше него. Ритм задаёт сам материал, без MIDI и без сетки.</p><div class="hero-actions"><button class="btn btn-primary btn-large" data-trial="ricochet">Демо 14 дней</button><button class="btn btn-secondary btn-large" data-checkout="ricochet">Купить за 2499 ₽</button><a class="btn btn-secondary btn-large" href="/ricochet/">О Ricochet</a></div></div>
-      </div></article>
-      <article class="product-panel product-panel--cutter"><div class="container product-panel-grid">
-        <div class="product-panel-copy"><h2>Cutter</h2><p class="product-promise">Укоротить звук по его собственным ударам.</p><p>Каждый транзиент запускает форму громкости длиной в восьмую или четверть. Бесплатно и целиком: без лицензии, активации и триала.</p><div class="hero-actions"><a class="btn btn-amber btn-large" href="/cutter/">Скачать бесплатно</a><a class="btn btn-secondary btn-large" href="/cutter/#system">О Cutter</a></div></div>
-        <figure class="showcase-shot"><picture><source type="image/webp" srcset="/cutter/assets/cutter-ui-800.webp 800w, /cutter/assets/cutter-ui.webp 1296w" sizes="(max-width: 859px) 100vw, 640px"><img src="/cutter/assets/cutter-ui.png" alt="Интерфейс Cutter с дисплеем CUT" width="1296" height="864" loading="lazy" decoding="async"></picture></figure>
-      </div></article>
-      <article class="product-panel product-panel--inspirator"><div class="container product-panel-grid">
-        <div class="product-panel-copy"><h2>INSPIRATOR</h2><p class="product-promise">Сравнить микс с референсом на мастер-шине.</p><p>A/B, петля, спектр, сонограмма и LUFS обоих. Вкладка Match показывает, где и сколько добавить в микс, и сохраняет это пресетом для вашего эквалайзера. Бесплатно, без лицензии и активации, для macOS и Windows.</p><div class="hero-actions"><a class="btn btn-amber btn-large" href="/inspirator/">Скачать бесплатно</a><a class="btn btn-secondary btn-large" href="/inspirator/#system">Об INSPIRATOR</a></div></div>
-        <figure class="showcase-shot"><picture><source type="image/webp" srcset="/inspirator/assets/inspirator-poster-800.webp 800w, /inspirator/assets/inspirator-poster.webp 1400w" sizes="(max-width: 859px) 100vw, 640px"><img src="/inspirator/assets/inspirator-poster.png" alt="Интерфейс INSPIRATOR с кривой Match" width="1400" height="865" loading="lazy" decoding="async"></picture></figure>
-      </div></article>
+    <section class="opening">
+      <h1>Пять плагинов.<br>Бесплатно.</h1>
     </section>
 
-    <section class="section proof-placeholder" aria-labelledby="proof-title">
-      <div class="container">
-        <h2 id="proof-title">Аудиопримеры и отзывы.</h2>
-        <p>Добавим их после открытого тестирования.</p>
+    <!-- Faraway 1 и Faraway 0 — два РАЗНЫХ плагина, а не версии одного: они
+         ставятся рядом и у них разные идентификаторы. Проект, сделанный в
+         прежнем Faraway, открывается только прежним, поэтому он здесь и лежит
+         наравне с новым, а не спрятан в «архив». -->
+    <article class="item" id="faraway-1">
+      <div class="item-head">
+        <h2>Faraway<span class="generation">1</span></h2>
+        <p class="platforms">macOS: VST3, AU · Windows: VST3</p>
       </div>
-    </section>
+      <figure class="plinth">
+        <picture>
+          <source type="image/webp" srcset="/assets/faraway-ui-800.webp 800w, /assets/faraway-ui-1600.webp 1600w, /assets/faraway-ui.webp 3120w" sizes="(max-width: 860px) 92vw, 1040px">
+          <img src="/assets/faraway-ui.png" alt="Интерфейс Faraway 1 с секциями Compressor, Distance, Tone, Space и Width" width="2656" height="1172" loading="lazy" decoding="async">
+        </picture>
+      </figure>
+      <p class="pending">Сборка без лицензии готовится.</p>
+    </article>
 
-    <section class="section combo" id="combo"><div class="container combo-grid">
-      <div><h2>Глубина и движение в одном комбо.</h2><p>Faraway 1.0 управляет глубиной. Ricochet переносит каждый удар по панораме. Вместе 3999 ₽ вместо 4998 ₽.</p></div>
-      <div class="combo-buy"><p class="combo-price"><span>3999</span> ₽</p><p>Два плагина, две лицензии, один платёж.</p><button class="btn btn-primary btn-large" data-checkout="combo">Купить комбо</button></div>
-    </div></section>
+    <article class="item item--compact" id="faraway-0">
+      <div class="item-head">
+        <h2>Faraway<span class="generation">0</span></h2>
+        <p class="platforms">macOS: VST3, AU · Windows: VST3</p>
+      </div>
+      <p class="note">Прежний Faraway. Нужен, если в нём сделаны проекты: Faraway&nbsp;1 ставится рядом и чужие сессии не открывает.</p>
+      <p class="pending">Сборка без лицензии готовится.</p>
+    </article>
+
+    <article class="item" id="ricochet">
+      <div class="item-head">
+        <h2>Ricochet</h2>
+        <p class="platforms">macOS: VST3, AU · Windows: VST3</p>
+      </div>
+      <figure class="plinth">
+        <picture>
+          <source type="image/webp" srcset="/assets/ricochet-ui-800.webp 800w, /assets/ricochet-ui.webp 1040w" sizes="(max-width: 860px) 92vw, 1040px">
+          <img src="/assets/ricochet-ui.png" alt="Интерфейс Ricochet с панелями Trigger и Motion" width="1040" height="560" loading="lazy" decoding="async">
+        </picture>
+      </figure>
+      <p class="pending">Сборка без лицензии готовится.</p>
+    </article>
+
+    <article class="item" id="cutter">
+      <div class="item-head">
+        <h2>Cutter<span class="version">1.0.13</span></h2>
+        <p class="platforms">macOS: VST3, AU · Windows: VST3</p>
+      </div>
+      <figure class="plinth">
+        <picture>
+          <source type="image/webp" srcset="/assets/cutter-ui-800.webp 800w, /assets/cutter-ui.webp 1296w" sizes="(max-width: 860px) 92vw, 1040px">
+          <img src="/assets/cutter-ui.png" alt="Интерфейс Cutter с дисплеем CUT" width="1296" height="864" loading="lazy" decoding="async">
+        </picture>
+      </figure>
+      <div class="get">
+        <a class="btn" href="https://github.com/Podlesny-Twins/podlesnytwins-plugins/releases/download/cutter-1.0.13/Cutter-Installer-v1.0.13.pkg">macOS</a>
+        <a class="btn" href="https://github.com/Podlesny-Twins/podlesnytwins-plugins/releases/download/cutter-1.0.13/Cutter-Setup-v1.0.13.exe">Windows</a>
+      </div>
+    </article>
+
+    <article class="item" id="inspirator">
+      <div class="item-head">
+        <h2>INSPIRATOR<span class="version">0.12.0</span></h2>
+        <p class="platforms">macOS: VST3, AU · Windows: VST3</p>
+      </div>
+      <figure class="plinth">
+        <picture>
+          <source type="image/webp" srcset="/assets/inspirator-poster-800.webp 800w, /assets/inspirator-poster.webp 1400w" sizes="(max-width: 860px) 92vw, 1040px">
+          <img src="/assets/inspirator-poster.png" alt="Интерфейс INSPIRATOR с кривой Match" width="1400" height="865" loading="lazy" decoding="async">
+        </picture>
+      </figure>
+      <div class="get">
+        <a class="btn" href="https://github.com/Podlesny-Twins/podlesnytwins-plugins/releases/download/inspirator-0.12.0/INSPIRATOR-0.12.0-macOS.zip">macOS</a>
+        <a class="btn" href="https://github.com/Podlesny-Twins/podlesnytwins-plugins/releases/download/inspirator-0.12.0/INSPIRATOR-Setup-v0.12.0.exe">Windows</a>
+      </div>
+    </article>
+
+    <!-- Единственный текст, который на этой странице обязан быть: без него
+         неподписанный установщик выглядит как сбой, и человек его удаляет. -->
+    <section class="install">
+      <h2>Установка</h2>
+      <p>Установщики не подписаны — сертификаты Apple и Microsoft российскому разработчику сейчас не выдают. Система предупредит об этом про любой неподписанный файл, не только про наш.</p>
+      <p><b>macOS:</b> правый клик по файлу, «Открыть», затем «Открыть» в диалоге.<br><b>Windows:</b> «Подробнее», затем «Выполнить в любом случае».</p>
+    </section>
   </main>
 
-  <div class="buybar" hidden><span class="buybar-price">Faraway 1.0 + Ricochet · 3999 ₽</span><button class="btn btn-primary btn-small" data-checkout="combo">Купить</button></div>
+  <footer class="colophon">
+    <p><a href="mailto:plugins@podlesnytwins.com">plugins@podlesnytwins.com</a></p>
+    <p>© 2026 Podlesny Twins</p>
+  </footer>
 
-  <footer class="site-footer"><div class="container footer-inner"><div class="footer-col"><a href="/" class="logo">Podlesny&nbsp;Twins</a><p>Плагины для глубины и движения в миксе.</p></div><div class="footer-col"><h4>Поддержка</h4><ul><li><a href="/account/">Личный кабинет</a></li><li><a href="mailto:plugins@podlesnytwins.com">plugins@podlesnytwins.com</a></li><li><a href="/legal/offer/">Публичная оферта</a></li><li><a href="/legal/privacy/">Политика обработки данных</a></li></ul></div></div><div class="container copyright"><p>&copy; 2026 Podlesny Twins.</p></div></footer>
-
-  <dialog id="checkout" class="checkout" aria-labelledby="checkout-title"><button class="checkout-close" type="button" data-checkout-close aria-label="Закрыть">&times;</button><h2 id="checkout-title">Faraway <span class="ver">1.0</span> + Ricochet — 3999 ₽</h2><p class="checkout-lead checkout-buy">Лицензии и ссылки на установщики придут после оплаты.</p><p class="checkout-lead checkout-trial" hidden>Согласия на демо собираются на странице плагина — отправим вас туда.</p><form id="checkout-form" novalidate><input type="hidden" name="product" value="combo"><label class="field"><span class="field-label">Имя и фамилия</span><input type="text" name="name" autocomplete="name" required maxlength="100" placeholder="Иван Петров"><span class="field-hint">Имя будет указано в лицензии.</span></label><label class="field"><span class="field-label">E-mail</span><input type="email" name="email" autocomplete="email" required inputmode="email" placeholder="you@studio.com"></label><div class="checkout-buy"><label class="check"><input type="checkbox" name="consent" required><span>Принимаю <a href="/legal/offer/" target="_blank" rel="noopener">публичную оферту</a>.</span></label></div><p class="checkout-fine checkout-buy">Имя и e-mail нужны для оформления заказа и выдачи лицензии. Подробнее — в <a href="/legal/privacy/" target="_blank" rel="noopener">политике обработки данных</a>.</p><p class="checkout-error" role="alert" hidden></p><button class="btn btn-primary btn-large checkout-submit" type="submit">Перейти к оплате</button><p class="checkout-fine checkout-buy">Оплата картой или через СБП на стороне Точка Банка.</p></form></dialog>
-  <script src="/script.js"></script>
-  <script src="/hero-shader.js" defer></script>
+  <script src="/rise.js" defer></script>
 </body>
 </html>

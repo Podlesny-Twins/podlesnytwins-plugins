@@ -1,44 +1,54 @@
 # Design
 
+Снято 5 ноября 2026 с живой страницы. Прежний тёмный студийный мир ушёл вместе
+с магазином: продавать нечего, удерживать внимание незачем.
+
 ## Theme
 
-Premium dark plugin landing page. Дух Cradle The God Particle: минимум декора, большая типографика, щедрый воздух, UI-плагин как главный герой.
+Белый камень, тёмные панели плагинов как предметы на нём. Страница ничего не
+доказывает: называет вещь, показывает её и отдаёт файл.
 
 ## Color
 
-- Background: `#0a0c0d` (около чёрного, тёмная студия)
-- Surface: `#131619`
-- Surface 2: `#1a1f22`
-- Border: `#23282c`
-- Text: `#f0f2f4`
-- Muted: `#8a9199`
-- Accent: `#5ee7b3` (teal из UI Ricochet)
-- Accent dim: `#3d9e7a`
-- Accent glow: `rgba(94, 231, 179, 0.15)`
+- Paper: `#ffffff`
+- Stone (постамент под снимком): `#f4f4f6`
+- Ink: `#101013`
+- Ink soft: `#5d5d66`
+- Hairline: `#e2e2e7`
+
+Акцентного цвета нет намеренно: единственное цветное пятно на странице — сами
+интерфейсы плагинов.
 
 ## Typography
 
-- Display / headings: `SaarSP`, Arial, sans-serif
-- Body / UI: `Work Sans`, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif
-- Bold emphasis: `LiteralBold`, Arial, sans-serif
+- Display: `SaarSP` — только прописные, узкие. Имена плагинов, заголовки,
+  словесный знак. Цифр в нём нет годных, поэтому номера версий и поколений
+  набираются текстовым шрифтом.
+- Body: `Golos Text` (Paratype, SIL OFL) — кириллица и латиница, 400–900.
+- `LiteralBold` — выделение внутри абзаца установки.
 
-Шрифты подгружаются с основного сайта credits.podlesnytwins.com / static.tildacdn.com.
+Шрифты самохостятся в `assets/fonts/`.
 
 ## Layout
 
-- Max width: 1200px
-- Generous vertical rhythm: 6–8rem между секциями
-- Hero centered, остальное — левая колонка или split
-- FAQ — суженная центральная колонка 720px
+- Колонка 1120 px, центрированная; текстовые блоки сужены до 52–65 ch.
+- Один плагин — один блок, разделённый волосяной линией.
+- Вертикальный ритм задан в `vh`: 9vh внутри блока, 7–11vh на первом экране.
 
 ## Components
 
-- Buttons: rounded 8px, primary — accent на тёмном тексте, secondary — обводка
-- Cards: no nested cards; использовать только когда нужно группирование
-- FAQ: native `<details>`
+- `.plinth` — светлый постамент со скруглением 20 px; снимок внутри приподнят
+  нейтральной тенью со смещением и размытием.
+- `.btn` — чёрная пилюля, минимум 48 px по высоте, на телефоне во всю ширину.
+- `.generation` / `.version` — номер модели и номер версии рядом с именем.
 
 ## Motion
 
-- Intentional reveals (opacity + translateY) с `prefers-reduced-motion` fallback
-- Hover — мягкое glow на primary кнопках
-- No bounce, no elastic
+Один авторский момент: имя и предмет выходят из-под кромки на 26 px с
+exponential ease-out, по одному разу. Внутри `prefers-reduced-motion:
+no-preference`; без скрипта страница остаётся на месте.
+
+## Browser surfaces
+
+Выделение, каретка, кольцо фокуса, полоса прокрутки и табличные цифры заданы от
+палитры, а не оставлены браузеру.

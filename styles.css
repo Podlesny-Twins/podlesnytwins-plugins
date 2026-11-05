@@ -1,242 +1,254 @@
-/* Атрибут hidden обязан выигрывать у любого правила display ниже.
-   Без этого блок, спрятанный из скрипта, остаётся на экране: у
-   .checkout-lead и .field-hint есть свой display, и он сильнее. Поймано
-   на форме триала 2026-09-03 — вводная строка про оплату висела над
-   формой, которая ничего не спишет. */
-[hidden] { display: none !important; }
+/* plugins.podlesnytwins.com — витрина пяти бесплатных плагинов.
+   Светлый мир: белый камень, тёмные панели плагинов как предметы на нём.
+   Прежний тёмный студийный мир снят вместе с магазином: продавать нечего,
+   и страница больше не держит внимание, а отдаёт файл. */
+
+@font-face {
+  font-family: 'SaarSP';
+  src: url('assets/fonts/SaarSP.woff') format('woff');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'LiteralBold';
+  src: url('assets/fonts/LiteralBold.woff') format('woff');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+/* Golos Text — Paratype, Александра Королькова и Виталий Кузьмин, SIL OFL 1.1.
+   Копия лицензии лежит рядом со шрифтом. Он здесь потому, что весь мелкий
+   русский текст иначе рисуется системным шрифтом посетителя — SF Pro на маке,
+   Segoe UI на винде, то есть два разных сайта и ни один не выбран. */
+@font-face {
+  font-family: 'Golos Text';
+  src: url('assets/fonts/GolosText-cyrillic.woff2') format('woff2');
+  font-weight: 400 900; font-style: normal; font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Golos Text';
+  src: url('assets/fonts/GolosText-latin.woff2') format('woff2');
+  font-weight: 400 900; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Golos Text';
+  src: url('assets/fonts/GolosText-latin-ext.woff2') format('woff2');
+  font-weight: 400 900; font-style: normal; font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
 :root {
-  --amber: #f08a35;
-  --amber-bright: #ff9b49;
-  --amber-dim: #9d5725;
-  --amber-glow: rgba(240, 138, 53, 0.15);
+  --paper: #ffffff;
+  --stone: #f4f4f6;   /* постамент под снимком интерфейса */
+  --ink: #101013;
+  --ink-soft: #5d5d66;
+  --hairline: #e2e2e7;
+  --font-display: 'SaarSP', Georgia, serif;
+  --font-body: 'Golos Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --rise: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-amber {
-  background: var(--amber);
-  color: #160c05;
-}
-.btn-amber:hover { background: var(--amber-bright); box-shadow: 0 0 36px var(--amber-glow); }
-.btn-amber:disabled { background: var(--amber-dim); cursor: progress; }
+*, *::before, *::after { box-sizing: border-box; }
 
-/* Надзаголовки (.eyebrow) убраны со всех страниц: они были прямо перечислены
-   в анти-референсах PRODUCT.md, а на деле стояли над каждой второй секцией и
-   отбирали у заголовка первую строку. «Одна макрокоманда» / «Зачем» / «Комбо»
-   не несли ничего, чего нет в самом заголовке.
-   Двухцветная черта из .eyebrow--split была единственной живой деталью в той
-   строке, поэтому она переехала на сам заголовок комбо-блока. */
-.combo-band h2::before,
-.combo h2::before {
-  content: "";
-  display: block;
-  width: 56px;
-  height: 3px;
-  margin-bottom: 22px;
-  background: linear-gradient(90deg, var(--amber) 0 50%, var(--accent) 50%);
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Полосу прокрутки тоже рисуем: по умолчанию она не принадлежит никакому
+     оформлению и выдаёт страницу, собранную из кусков. */
+  scrollbar-color: #c9c9d1 transparent;
+  scrollbar-width: thin;
 }
 
-.home-hero {
-  min-height: 78svh;
-  display: grid;
-  align-items: end;
-  padding: 160px 0 88px;
-  border-bottom: 1px solid var(--border);
-  /* зелёное свечение справа убрано: там теперь шейдер, градиент только мутил кольца */
-  background: radial-gradient(circle at 15% 80%, var(--amber-glow), transparent 30%);
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+  caret-color: var(--ink);
+  -webkit-font-smoothing: antialiased;
 }
-/* max-width в em, а не ch: у SaarSP нет цифр, поэтому ch берётся из фолбэка и переносы плывут */
-.home-hero h1 { max-width: 10em; font-size: clamp(3rem, 7.6vw, 6.7rem); }
-.home-lead { max-width: 58ch; font-size: clamp(1.1rem, 1.8vw, 1.4rem); }
 
-.home-hero { position: relative; overflow: hidden; }
-.hero-grid { position: relative; z-index: 1; display: grid; gap: 48px; align-items: center; }
+::selection { background: #d8d8e0; color: var(--ink); }
 
-.hero-cards { display: grid; gap: 16px; }
-.hero-card {
-  display: grid;
-  gap: 6px;
-  padding: 24px 26px 22px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  /* карточки лежат поверх шейдера, поэтому фон почти непрозрачный: иначе кольца съедают текст */
-  background: rgba(15, 18, 20, .92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  color: var(--muted);
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+a { color: inherit; text-decoration-color: var(--hairline); text-underline-offset: 0.2em; }
+
+/* ---- шапка: только знак, никакой навигации — вести некуда ---- */
+.masthead {
+  display: flex;
+  justify-content: center;
+  padding: 28px 24px;
+}
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  letter-spacing: 0.01em;
   text-decoration: none;
-  transition: border-color .2s var(--ease-out), background .2s var(--ease-out), transform .2s var(--ease-out);
-}
-.hero-card:hover { transform: translateY(-2px); background: rgba(20, 24, 27, .96); }
-.hero-card-role { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
-/* номер версии в заголовках: у SaarSP цифры читаются как буквы (1.O), поэтому номер идёт шрифтом текста */
-.ver { font-family: var(--font-body); font-weight: 700; font-size: 0.9em; letter-spacing: 0; }
-.hero-card-name { font-family: var(--font-display); font-size: clamp(1.9rem, 3vw, 2.5rem); line-height: 1; color: var(--text); }
-.hero-card-promise { margin: 4px 0 0; font-size: .92rem; line-height: 1.5; }
-.hero-card-more { margin-top: 6px; font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text); }
-/* Цвет продукта раньше держался на 3-пиксельной планке слева — самом узнаваемом
-   штампе сгенерированных интерфейсов. Он и так звучит дважды: в подписи роли и
-   в строке «Открыть». Достаточно подкрасить саму рамку в 1 px и дать ей выйти
-   в полный тон на ховере. */
-.hero-card--faraway { border-color: rgba(240, 138, 53, .3); }
-.hero-card--faraway .hero-card-role, .hero-card--faraway .hero-card-more { color: var(--amber); }
-.hero-card--faraway:hover { border-color: var(--amber); }
-.hero-card--ricochet { border-color: rgba(94, 231, 179, .26); }
-.hero-card--ricochet .hero-card-role, .hero-card--ricochet .hero-card-more { color: var(--accent); }
-.hero-card--ricochet:hover { border-color: var(--accent); }
-/* Cutter's card takes the amber the product page already uses, so the hero
-   reads as three products in two colours rather than three colours. */
-.hero-card--cutter { border-color: rgba(240, 138, 53, .3); }
-.hero-card--cutter .hero-card-role, .hero-card--cutter .hero-card-more { color: var(--amber); }
-.hero-card--cutter:hover { border-color: var(--amber); }
-.hero-card--inspirator { border-color: rgba(240, 138, 53, .3); }
-.hero-card--inspirator .hero-card-role, .hero-card--inspirator .hero-card-more { color: var(--amber); }
-.hero-card--inspirator:hover { border-color: var(--amber); }
-
-/* Шейдер живёт слоем самой секции, а не карточкой: маска растворяет его в фоне. */
-.hero-shader {
-  position: absolute;
-  inset: 0 0 0 auto;
-  width: 74%;
-  height: 100%;
-  opacity: .78;
-  mix-blend-mode: screen;
-  pointer-events: none;
-  /* маска не нужна: при screen чёрный фон шейдера не даёт ничего, рамки нет.
-     Гасим только левый край, чтобы кольца не наезжали на текст. */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 26%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 26%);
-}
-@media (min-width: 980px) {
-  .hero-grid { grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr); gap: 64px; }
-  .home-hero h1 { max-width: 8.6em; font-size: clamp(2.9rem, 4.6vw, 4.6rem); }
-  .home-lead { max-width: 34ch; }
-}
-@media (max-width: 979px) {
-  /* Кольца на узком раньше гасились до .32 — и это был худший из вариантов:
-     WebGL всё равно считался каждый кадр (в hero-shader.js нет отключения по
-     ширине, только по prefers-reduced-motion), то есть батарея тратилась, а
-     фона не было. Возвращаем ту же насыщенность, что на десктопе.
-
-     Читаемость держит не гашение, а маска: верхняя часть экрана, где лежат
-     заголовок и подзаголовок, остаётся чистой, кольца набирают полную силу
-     ниже — там, где карточки продуктов, а у них собственный почти
-     непрозрачный фон с блюром. Текст поверх колец не оказывается нигде. */
-  .hero-shader {
-    width: 100%;
-    opacity: .72;
-    -webkit-mask-image: linear-gradient(180deg, transparent 30%, #000 62%);
-    mask-image: linear-gradient(180deg, transparent 30%, #000 62%);
-  }
 }
 
-.product-panel { padding: 104px 0; border-bottom: 1px solid var(--border); overflow: hidden; }
-.product-panel--faraway { background: linear-gradient(135deg, rgba(240,138,53,.055), transparent 50%); }
-.product-panel--ricochet { background: linear-gradient(225deg, rgba(94,231,179,.045), transparent 50%); }
-.product-panel-grid { display: grid; gap: 52px; align-items: center; }
-.product-panel-copy h2 { margin-bottom: 12px; font-size: clamp(3rem, 6vw, 5.4rem); }
-.product-promise { color: var(--text); font-size: clamp(1.2rem, 2vw, 1.55rem); max-width: 34ch; }
-.showcase-shot { margin: 0; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 34px 90px rgba(0,0,0,.48); }
-/* Faraway's window is 3120x1172. Zooming it to 150% and panning left put a
-   third of the plugin outside the figure's overflow:hidden — the EQ curve and
-   the right-hand modules were simply gone. Show the instrument whole. */
-.showcase-shot--wide img { width: 100%; max-width: 100%; transform: none; }
-@media (min-width: 980px) {
-  .product-panel-grid { grid-template-columns: minmax(300px,.72fr) minmax(0,1.28fr); }
-  .product-panel-grid--reverse { grid-template-columns: minmax(0,1.28fr) minmax(300px,.72fr); }
-
-  /* Окно Faraway 2.66:1 против 1.86:1 у Ricochet, поэтому в равной колонке оно
-     даёт 264 px высоты против 378 и читается как меньший продукт. Внутри
-     контейнера +20% не выдать: картинке нужно 845 px, тексту осталось бы 255
-     при его собственном минимуме 300. Растём вправо, в поле между контейнером
-     и краем экрана, и ограничиваем рост ровно тем, что там есть — ширина
-     никогда не больше доступного места, поэтому обрезать нечего.
-     max(100%,…) — не украшение: ниже 1200 px слагаемое отрицательное, и без
-     этого пола min() выбирал именно его, из-за чего в полосе 980-1168 px
-     картинка СЖИМАЛАСЬ (на 980 давала 460 px против 554 у колонки). Полные
-     +20% наступают примерно с 1450 px, ниже - сколько поля физически есть. */
-  .product-panel--faraway .showcase-shot {
-    width: max(100%, min(120%, calc(100% + (100vw - var(--max-width)) / 2 + 8px)));
-  }
+/* ---- первый экран: одна фраза ---- */
+.opening {
+  display: grid;
+  place-items: center;
+  min-height: min(62vh, 560px);
+  padding: 7vh 24px 11vh;
+  text-align: center;
+}
+.opening h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 9vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
-.combo { background: var(--surface); }
-.combo-grid { display: grid; gap: 48px; align-items: center; }
-.combo-buy { padding: 32px; border-left: 2px solid var(--accent); background: linear-gradient(110deg, rgba(240,138,53,.06), rgba(94,231,179,.06)); }
-.combo-price { margin: 0; color: var(--text); line-height: 1; }
-.combo-price span { font-family: var(--font-display); font-size: clamp(4rem,8vw,7rem); }
-@media (min-width: 860px) { .combo-grid { grid-template-columns: 1.3fr .7fr; gap: 88px; } }
-
-/* На главной --accent остаётся зелёным: янтарь тут у одной панели, а не у
-   страницы. Переопределяем токен только внутри меню демо, чтобы фокус и
-   ховер шли в цвет панели и ничего не красилось хардкодом. */
-.product-panel--faraway .demo { --accent: var(--amber); }
-
-.faraway-page { --accent: var(--amber); --accent-dim: var(--amber-dim); --accent-glow: var(--amber-glow); }
-
-/* Cutter рисует волну тем же янтарём, что и Faraway, поэтому берёт тот же
-   токен, а не третий оттенок ради непохожести. Окно у него 3:2 — картинка
-   заметно ниже, чем у соседей, и растягивать её до их высоты нельзя. */
-.product-panel--cutter { --accent: var(--amber); }
-.product-panel--inspirator { --accent: var(--amber); }
-.cutter-page { --accent: var(--amber); --accent-dim: var(--amber-dim); --accent-glow: var(--amber-glow); }
-.cutter-shot img { width: 100%; max-width: 100%; transform: none; }
-.inspirator-controls { display: grid; gap: 28px 40px; }
-.inspirator-gallery { display: grid; gap: 16px; margin-top: 28px; }
-.inspirator-gallery figure { margin: 0; }
-.inspirator-gallery img { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); }
-@media (min-width: 720px) { .inspirator-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } .inspirator-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1100px) { .inspirator-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.cutter-control-shot { aspect-ratio: 1.5 / 1; }
-.cutter-control-shot img { width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: center; }
-
-/* Экран «готово» в диалоге бесплатной выдачи: ссылки вместо кнопки оплаты.
-   Отдельный блок, а не подмена текста в форме, — чтобы поля с согласиями
-   ушли с экрана вместе с формой и не выглядели как что-то, что ещё можно
-   передумать после того, как согласие уже отправлено. */
-.checkout-links { display: grid; gap: 10px; margin: 18px 0; }
-.checkout-link { text-align: center; text-decoration: none; }
-.faraway-shot img { width: 100%; max-width: 100%; transform: none; }
-/* Герой Faraway жил на своей сетке — 0.72/1.28 против 1/1.05 у Ricochet, —
-   и колонка текста выходила 392 px против 562. Две страницы одного продукта
-   читались как сделанные разными руками. Сетку задаёт .hero-grid — но НЕ из общего листа:
-   /styles.css грузится вторым, поэтому побеждает правило отсюда (строка ~93,
-   медиазапрос 980px). Правило в ricochet/styles.css мертво. Кто будет сужать
-   этот файл до одной главной — сперва перенесите ту строку, иначе колонки
-   продуктовых страниц молча поедут. Вынос за край живёт в общем листе, ниже
-   блока .hero-shot, который его раньше глушил. Здесь переопределять нечего:
-   картинки всё равно разной высоты, потому что окна плагинов разной формы,
-   и это честная разница, а не разная вёрстка. */
-
-.depth-map { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.depth-map span { min-height: 96px; display: grid; place-items: center; border: 1px solid var(--border); color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .08em; }
-.depth-map .depth-core { grid-column: 1 / -1; min-height: 124px; color: var(--text); border-color: var(--amber-dim); background: radial-gradient(circle, var(--amber-glow), transparent 70%); font-family: var(--font-display); font-size: 1.4rem; }
-.faraway-control-shot { aspect-ratio: 1.34 / 1; }
-.faraway-control-shot img { width: 242%; height: 100%; max-width: none; object-fit: cover; object-position: 47% center; }
-.combo-band { background: linear-gradient(110deg, rgba(240,138,53,.055), rgba(94,231,179,.045)); }
-
-@media (max-width: 680px) {
-  /* min-height нужен не ради воздуха, а ради фона: при auto секция
-     схлопывается по контенту, и кольцам просто негде развернуться —
-     от шейдера остаётся полоска. */
-  .home-hero { min-height: 84svh; padding-top: 124px; }
-  .product-panel { padding: 76px 0; }
-  /* was 175% + pan: on a phone that showed roughly the middle third of the
-     plugin and read as a broken image rather than a close-up */
-  .showcase-shot--wide img, .faraway-shot img { width: 100%; transform: none; }
-
-  /* Та же болезнь у кропа секции контролов: 242% ширины на 390 px показывали
-     середину прибора без краёв — читалось как битая картинка, а не крупный
-     план. На телефоне лучше весь прибор мелким, чем треть крупно. */
-  .faraway-control-shot { aspect-ratio: 2.66 / 1; }
-  .faraway-control-shot img { width: 100%; height: auto; object-fit: contain; }
+/* ---- плагин ---- */
+.item {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 9vh 24px;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+}
+.item-head { margin-bottom: 36px; }
+.item h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 6.4vw, 4.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+/* Поколение Faraway. В SaarSP цифры чужие — тоньше и уже прописных, рядом с
+   ними они читаются как сбой шрифта. Поэтому цифра намеренно набрана текстовым
+   шрифтом и уменьшена: номер модели рядом с именем, а не часть надписи. */
+.generation {
+  display: inline-block;
+  margin-left: 0.34em;
+  font-family: var(--font-body);
+  font-size: 0.42em;
+  font-weight: 600;
+  letter-spacing: 0;
+  vertical-align: 0.12em;
+}
+/* Номер версии — служебное число, поэтому телом, мелко и спокойно. */
+.version {
+  display: inline-block;
+  margin-left: 0.6em;
+  font-family: var(--font-body);
+  font-size: 0.3em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  vertical-align: 0.5em;
+}
+.platforms {
+  margin: 14px 0 0;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
 }
 
-/* Кабинет: блок рассылки подсвечивается, когда человек пришёл по подарочной
-   ссылке и рассылка ещё не включена — это тот шаг, ради которого его позвали. */
-.account-updates { margin: 32px 0; }
-.account-updates.attention {
-  outline: 2px solid var(--amber);
-  outline-offset: 12px;
+.plinth {
+  margin: 0 0 40px;
+  padding: clamp(20px, 4vw, 56px);
+  background: var(--stone);
+  border-radius: 20px;
+}
+.plinth img {
+  display: block;
+  width: 100%;
+  height: auto;
   border-radius: 8px;
-  transition: outline-color .6s ease;
+  /* Снимок приподнят над камнем: смещение и мягкое размытие, без цвета. */
+  box-shadow: 0 18px 44px -22px rgba(16, 16, 19, 0.45);
+}
+
+.note, .pending {
+  max-width: 52ch;
+  margin: 0 auto;
+  color: var(--ink-soft);
+}
+.note { margin-bottom: 28px; }
+.pending { font-size: 0.9375rem; }
+
+.get {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 30px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background-color 0.2s var(--rise), transform 0.2s var(--rise);
+}
+.btn:hover { background: #2b2b33; }
+.btn:active { transform: translateY(1px); }
+
+.item--compact h2 { font-size: clamp(1.75rem, 4.4vw, 2.75rem); }
+
+/* ---- установка: единственный абзац, без которого файл удаляют ---- */
+.install {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 9vh 24px;
+  border-top: 1px solid var(--hairline);
+}
+.install h2 {
+  margin: 0 0 20px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.75rem;
+  letter-spacing: -0.015em;
+}
+.install p { margin: 0 0 16px; color: var(--ink-soft); }
+.install b { color: var(--ink); font-family: 'LiteralBold', var(--font-body); font-weight: 700; }
+
+/* ---- подвал ---- */
+.colophon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  justify-content: center;
+  padding: 48px 24px 64px;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+.colophon p { margin: 0; }
+
+/* ---- один авторский момент: предмет выходит из-под кромки ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .rise { opacity: 0; transform: translateY(26px); }
+  .rise.shown {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.8s var(--rise), transform 0.8s var(--rise);
+  }
+  .rise.shown.rise--late { transition-delay: 0.1s; }
+}
+
+@media (max-width: 640px) {
+  .item, .install { padding-left: 20px; padding-right: 20px; }
+  .get { flex-direction: column; align-items: stretch; }
+  .btn { justify-content: center; }
 }
